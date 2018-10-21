@@ -46,6 +46,27 @@ export default {
     //用户上传图片
     uploadImg: (data)=>{
       return postForm('/api/user/uploadImg',data)
+    },
+    //获取用户上传列表
+    getUserUpload: (data)=>{
+      return get('/api/user/getUpload',data)
+    }
+  },
+  admin:{
+    login: (data)=>{
+      return postForm('/api/admin/login',data)
+    },
+    getUser: (data)=>{
+      return get('/api/admin/getUserList',data)
+    },
+    getJf: (data)=>{
+      return get('/api/admin/getJf',data)
+    },
+    getUploadList: (data)=>{
+      return get('/api/admin/getUploadList',data)
+    },
+    comfirm: (data)=>{
+      return get('/api/admin/comfirm',data)
     }
   }
 }

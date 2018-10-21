@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import Admin from '@/components/Admin'
 import userEdit from '@/components/userEdit'
+import uploadPage from '@/components/uploadPage'
+import manage from '@/components/manage'
 
 Vue.use(Router)
 
@@ -21,6 +23,14 @@ export default new Router({
       path: '/userEdit',
       name: 'userEdit',
       component: userEdit
+    },{
+      path: '/uploadPage',
+      name: 'uploadPage',
+      component: uploadPage
+    },{
+      path: '/manage',
+      name: 'manage',
+      component: manage
     }
   ]
 })
