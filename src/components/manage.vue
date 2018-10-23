@@ -4,7 +4,7 @@
        <p class="title">悦嘉丽</p>
        <div class="nav" @click="chose(1)" :class="{'active': choseData===1 }">用户管理</div>
        <div class="nav" @click="chose(2)" :class="{'active': choseData===2 }">审批管理</div>
-       <!--<div class="nav" @click="chose(3)" :class="{'active': choseData===3 }">通用设置</div>-->
+       <div class="nav" @click="chose(3)" :class="{'active': choseData===3 }">通用设置</div>
      </div>
     <div class="right">
       <div v-if="choseData === 1">
@@ -29,6 +29,11 @@
                 :data="userList"
                 border
                 style="width: 100%">
+                <el-table-column
+                  fixed
+                  prop="id"
+                  label="ID"
+                ></el-table-column>
                 <el-table-column
                   prop="nick"
                   label="昵称"
@@ -99,6 +104,7 @@
               border
               key='aTable'
               style="width: 100%">
+
               <el-table-column
                 fixed
                 prop="uploadTime"
@@ -114,6 +120,7 @@
 
               <el-table-column
                 prop="phone"
+                width="120"
                 label="手机号"
               >
               </el-table-column>
@@ -121,7 +128,7 @@
               <el-table-column
                 prop="feeling"
                 label="感受"
-                width="500"
+                width="300"
               >
               </el-table-column>
 
@@ -145,7 +152,7 @@
                 </template>
               </el-table-column>
 
-              <el-table-column fixed="right" label="操作">
+              <el-table-column fixed="right" label="操作" width="200">
                 <template slot-scope="scope">
                   <el-button v-show="scope.row.status === 0" @click="pass(scope.row)" type="text" size="small" >审核通过</el-button>
                   <el-button v-show="scope.row.status === 0" @click="unpass(scope.row)" type="text" size="small" >审核不通过</el-button>
@@ -167,6 +174,18 @@
         <div class="header">
           <span class="topNav">通用设置</span>
         </div>
+        <div class="limit"><p>用户每月上传次数限制: </p><el-input class="input" v-model="uploadLimt"  ></el-input><el-button @click.native="setLimit" type="primary">保存</el-button></div>
+        <div class="header">
+          <span class="topNav" >活动通知设置</span>
+        </div>
+        <div class="limit"><p>活动名称: </p><el-input  v-model="activeName"  ></el-input></div>
+        <div class="limit"><p>上传成功提示: </p><el-input  v-model="uploadSuccess"  ></el-input></div>
+        <div class="limit"><p>上传成功底部文字: </p><el-input  v-model="uploadBottom"  ></el-input></div>
+        <div class="limit"><p>审核通过提示: </p><el-input  v-model="comfirmSuccess"  ></el-input></div>
+        <div class="limit"><p>审核通过底部文字: </p><el-input  v-model="comfirmSuccessBottom"  ></el-input></div>
+        <div class="limit"><p>审核未通过提示: </p><el-input  v-model="confirmFail"  ></el-input></div>
+        <div class="limit"><p>审核未通过底部文字: </p><el-input  v-model="confirmFailBottom"  ></el-input></div>
+        <el-button @click.native="setNotice" type="primary">保存</el-button>
       </div>
     </div>
     <div class="viewImgBox" v-if="showImgCtrl">
@@ -229,7 +248,15 @@
         },
         uploadList:[],
         viewList: [],
-        showImgCtrl: false
+        showImgCtrl: false,
+        uploadLimt: '',
+        activeName: '',
+        uploadSuccess : '',
+        uploadBottom : '',
+        confirmFail : '',
+        confirmFailBottom : '',
+        comfirmSuccess : '',
+        comfirmSuccessBottom : ''
       }
     },
     methods:{
@@ -258,6 +285,9 @@
               })
             }
           })
+        }else if(val === 3){
+          this.getLimit()
+          this.getNotice()
         }
       },
       searchUser: function () {
@@ -361,6 +391,57 @@
       viewImg(row){
         this.viewList = row.imgList
         this.showImgCtrl = true
+      },
+      getLimit(){
+        this.$api.admin.getLimt().then((res)=>{
+          if(res.data.code === 200){
+            this.uploadLimt = res.data.data.limit
+          }
+        })
+      },
+      setLimit(){
+        this.$api.admin.setLimt({
+          limit: this.uploadLimt
+        }).then((res)=>{
+          if(res.data.code === 200){
+            this.$message({
+              type: 'success',
+              message: '修改成功!'
+            });
+          }
+        })
+      },
+      setNotice(){
+        let data = {
+          activeName: this.activeName,
+          uploadSuccess: this.uploadSuccess,
+          uploadBottom:this.uploadBottom ,
+          confirmFail:this.confirmFail,
+          confirmFailBottom:this.confirmFailBottom ,
+          comfirmSuccess:this.comfirmSuccess ,
+          comfirmSuccessBottom: this.comfirmSuccessBottom
+        }
+        this.$api.admin.setNotice(data).then((res)=>{
+          if(res.data.code === 200){
+            this.$message({
+              type: 'success',
+              message: '修改成功!'
+            });
+          }
+        })
+      },
+      getNotice(){
+        this.$api.admin.getNotice().then((res)=>{
+          if(res.data.code === 200){
+            this.activeName = res.data.data.activeName
+            this.uploadSuccess = res.data.data.uploadSuccess
+            this.uploadBottom = res.data.data.uploadBottom
+            this.confirmFail = res.data.data.confirmFail
+            this.confirmFailBottom = res.data.data.confirmFailBottom
+            this.comfirmSuccess = res.data.data.comfirmSuccess
+            this.comfirmSuccessBottom = res.data.data.comfirmSuccessBottom
+          }
+        })
       }
     },
     mounted(){
@@ -416,6 +497,7 @@
       flex: 1;
       height: 100%;
       padding: 2rem;
+      overflow-y: auto;
       .header{
         display: flex;
         align-items: center;
@@ -431,6 +513,17 @@
       }
       .pageChose{
         margin-top: 1rem;
+      }
+      .limit{
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+        p{
+          width: 200px;
+        }
+        .input{
+          width: 200px;
+        }
       }
     }
     .viewImgBox{

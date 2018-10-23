@@ -67,6 +67,18 @@ export default {
     },
     comfirm: (data)=>{
       return get('/api/admin/comfirm',data)
+    },
+    getLimt: (data)=>{
+      return get('/api/admin/getLimit',data)
+    },
+    setLimt: (data)=>{
+      return get('/api/admin/setLimit',data)
+    },
+    getNotice:(data)=>{
+      return get('/api/admin/notice',data)
+    },
+    setNotice:(data)=>{
+      return get('/api/admin/noticeSet',data)
     }
   }
 }
