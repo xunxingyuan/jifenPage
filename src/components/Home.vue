@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div v-if="!show" class="loadingPage">
-      <x-img class="logo" src="../../static/img/logo2.gif"></x-img>
+      <x-img class="logo" src="../../static/img/logo2new.gif"></x-img>
     </div>
     <div v-if="show" class="homePage">
       <swiper v-if="showImg"  class="imgBox" @on-index-change="onSwiperItemIndexChange" :list="srcList" :show-dots="false" :interval="1500" :aspect-ratio="300/800" :auto="true" height="100vh"></swiper>
@@ -228,7 +228,7 @@
       },
       checkImg:  function () {
         let list1 = [{
-          img: '../../static/img/logo2.gif'
+          img: '../../static/img/logo2new.gif'
         },{
           img: '../../static/img/logo.png'
         },{
