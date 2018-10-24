@@ -4,7 +4,7 @@
       <x-img class="logo" src="../../static/img/logo2new.gif"></x-img>
     </div>
     <div v-if="show" class="homePage">
-      <swiper v-if="showImg"  class="imgBox" @on-index-change="onSwiperItemIndexChange" :list="srcList" :show-dots="false" :interval="1500" :aspect-ratio="1181/2100" :auto="true" height="100vh"></swiper>
+      <swiper v-if="showImg"  class="imgBox" @on-index-change="onSwiperItemIndexChange" :show-desc-mask="false" :list="srcList" :show-dots="false" :interval="1500" :aspect-ratio="1181/2100" :auto="true" height="100vh"></swiper>
       <div v-else>
         <section class="topPart">
           <x-img class="logo" src="../../static/img/logo.png"></x-img>
