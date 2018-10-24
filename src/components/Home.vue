@@ -32,7 +32,16 @@
             <p>为[comfort zone]家族圈粉</p>
             <p class="botOne">是真爱，就晒出来！</p>
           </div>
-          <swiper class="midBox" :show-dots="false" :interval="1500" :aspect-ratio="300/800" :list="showList1" :auto="true" height="220px"></swiper>
+          <div class="midContain">
+            <div class="leftCorner">
+              <img src="../../static/img/corner.png" />
+            </div>
+            <div class="rightCorner">
+              <img src="../../static/img/corner.png" />
+            </div>
+            <swiper class="midBox" :show-dots="false" :interval="1500" :aspect-ratio="300/800" :list="showList1" :auto="true" height="220px"></swiper>
+
+          </div>
           <div class="bot">
             <p>100积分即将到手</p>
             <p>你还在犹豫什么?</p>
@@ -311,10 +320,11 @@
    .user{
      position: absolute;
      right: 1rem;
-     bottom: 10px;
+     bottom: 8px;
+     z-index: 5;
      img{
-       width: 36px;
-       height: 36px;
+       width: 24px;
+       height: 24px;
      }
    }
    .bottom{
@@ -362,10 +372,12 @@
      box-sizing: border-box;
      padding: 0 10px;
      z-index: 6;
+     align-items: center;
+     justify-content: flex-start;
      .back{
-       font-size: 18px;
-       font-weight: 700;
-       margin-bottom: 1rem;
+       margin-top: 1.4rem;
+       font-size: 16px;
+       margin-bottom: 1.5rem;
        width: 100%;
        padding: 0 1rem;
        text-align: left;
@@ -451,9 +463,40 @@
           font-size: 16px;
         }
       }
-     .midBox{
-       width: 123.75px;
-     }
+      .midContain{
+        position: relative;
+        .midBox{
+           width: 123.75px;
+           z-index: 5
+        }
+        .leftCorner{
+          z-index: 4;
+          position: absolute;
+          width: 30px;
+          height: 40px;
+          left: -20px;
+          top: -12px;
+          overflow: hidden;
+          img{
+            width: 15px;
+            height: 24px;
+          }
+        }
+        .rightCorner{
+          position: absolute;
+          width: 30px;
+          height: 40px;
+          right: -20px;
+          bottom: -27px;
+          z-index: 4;
+          img{
+            width: 15px;
+            height: 24px;
+            transform: rotate(180deg);
+          }
+        }
+      }
+     
      .bot{
        margin-top: 10px;
        color: #fff;
@@ -558,10 +601,10 @@
          justify-content: center;
          .btn{
            margin-top: 4rem;
-           width: 180px;
-           height: 60px;
-           min-height: 60px;
-           font-size: 20px;
+           width: 135.5px;
+           height: 31px;
+           min-height: 31px;
+           font-size: 18px;
            border-radius: 3px;
            outline: none;
            border: none;
