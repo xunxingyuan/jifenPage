@@ -1,6 +1,6 @@
 <template>
   <div class="user-edit">
-    <p v-if="status!=='add'" class="myPoint">我的积分：<span>{{jifen}}</span></p>
+    <!--<p v-if="status!=='add'" class="myPoint">我的积分：<span>{{jifen}}</span></p>-->
     <group title="个人信息" >
       <x-input title="手机号码" type="tel" is-type="china-mobile" :disabled="status!=='add'&&phonenumber!==''" v-model="phonenumber"></x-input>
       <x-input title="昵称" type="text" :min="2" :max="10" v-model="nickname"></x-input>
@@ -36,7 +36,7 @@
         address: [],
         addressData: ChinaAddressV4Data,
         status: 'add',
-        jifen: ''
+        // jifen: ''
       }
     },
     methods:{
@@ -60,7 +60,7 @@
             this.inputAddress = res.data.data.areaName
             this.addressDetail = res.data.data.address
             this.address= res.data.data.areaCode
-            this.jifen = res.data.data.point
+            // this.jifen = res.data.data.point
           }else{
             this.status = 'add'
           }

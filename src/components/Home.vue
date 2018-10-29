@@ -19,8 +19,8 @@
           </div>
           <div class="mid">
             <p>快来分享你对[comfort zone]产品的使用感受</p>
-            <p>你来晒评价，我来送积分</p>
-            <p>更有机会获得双11明星素颜套装</p>
+            <!--<p>你来晒评价，我来送积分</p>-->
+            <p>即有机会获得双11明星素颜套装</p>
             <p class="small">详细规则点击右上角↗</p>
           </div>
           <button class="btn btn_tran" @click.stop="start">马上参与</button>
@@ -43,7 +43,7 @@
 
           </div>
           <div class="bot">
-            <p>100积分即将到手</p>
+            <p>双十一素颜套即将到手</p>
             <p>你还在犹豫什么?</p>
             <button class="btn btn_tran" @click="step=3">马上参与</button>
           </div>
@@ -53,7 +53,7 @@
             <div>
               <p class="topTitle">快来完成你的晒图任务吧！</p>
               <p>把你的使用心得分享出来，</p>
-              <p>审核通过之后就能获得100积分啦！</p>
+              <p>角逐前十，带走素颜套装。</p>
             </div>
             <div class="uploadOuter" @click="toUpload">
               <img class="upload" src="../../static/img/upload.png"   />
@@ -81,13 +81,13 @@
           <div class="introBox">
             <x-img class="logo" src="../../static/img/logo.png"></x-img>
             <p class="title">规则说明：</p>
-            <p class="ruler">1、活动时间：10月24日开始征集，活动长期有效；</p>
-            <p class="ruler">2、参与方式：在各大分享平台（如微博、微信朋友圈、小红书等）晒出您对悦嘉丽[comfort zone]舒适地带产品的评价，并截图上传至“素人种草”活动，即可获得100积分；</p>
-            <p class="ruler">3、每人每月最多可进行三次评论分享，每次成功晒图即可获得100积分；</p>
-            <p class="ruler">4、晒图规则：不可重复上传相同内容，不可上传他人的晒图，否则会被判定审核不通过；</p>
-            <p class="ruler">5、积分获取：嘉人们完成截图上传后，工作人员将在5个工作日内完成图片审核及积分发放，请您耐心等待；</p>
-            <p class="ruler">6、积分用途：积分可用于兑换悦嘉丽官方微信积分商城的所有礼品；</p>
-            <p class="ruler">*凡用户参与晒图活动并上传图片，即视为图片版权为用户本人所有并授权悦嘉丽官方使用。</p>
+            <p class="ruler">1、参与方式：在各大分享平台（如微博、微信朋友圈、小红书等）晒出您对悦嘉丽[comfort zone]舒适地带产品的评价，并截图上传至“素人种草”活动；</p>
+            <p class="ruler">2、活动时间：11月01日-11月7日</p>
+            <p class="ruler">   评选时间：11月08日-11月11日</p>
+            <p class="ruler">   获奖公布时间：11月12日</p>
+            <p class="ruler">3、活动奖品：票数最高的前10名，将获得价值1290元的双11明星素颜套装（套装含：3支每日晶采爽肤水）；</p>
+            <p class="ruler">4、晒图规则：不可重复上传相同内容，不可上传他人的晒图，否则会被判定审核不通过；工作人员将在5个工作日内完成图片审核，请您耐心等待；</p>
+            <p class="ruler">*凡用户参与晒图活动并上传图片，即视图片版权为用户本人所有并授权悦嘉丽官方使用。</p>
             <div class="btnBox"><button class="btn" @click="start">马上参与</button></div>
             <span class="close" @click="showRuler = false">
            <x-img src="../../static/img/Close.png"></x-img>
@@ -134,8 +134,6 @@
           img: '../../static/img/1.jpg'
         },{
           img: '../../static/img/2.jpg'
-        },{
-          img: '../../static/img/3.jpg'
         }],
         showList1:[{
           img: '../../static/img/show/01.jpg'
@@ -223,7 +221,7 @@
 
       },
       onSwiperItemIndexChange: function (val) {
-        if(val=== 2){
+        if(val=== 1){
           setTimeout(()=>{
             this.showImg = false
           },1500)
@@ -244,7 +242,11 @@
         },{
           img: '../../static/img/2.jpg'
         },{
-          img: '../../static/img/3.jpg'
+          img: '../../static/img/show/01.jpg'
+        },{
+          img: '../../static/img/show/02.jpg'
+        },{
+          img: '../../static/img/show/03.jpg'
         }]
 
         return new Promise((resolve,reject)=>{
@@ -252,7 +254,7 @@
           list1.forEach((e)=>{
             this.getImg(e.img).then(()=>{
               count+=1
-              if(count === 5){
+              if(count === 7){
                 resolve()
               }
             })
@@ -495,7 +497,7 @@
           }
         }
       }
-     
+
      .bot{
        margin-top: 10px;
        color: #fff;
