@@ -1,24 +1,35 @@
 <template>
   <div class="upload">
-    <div class="top" @click.stop="uploadImg">
-      <img src="../../static/img/upload.png"/>
+    <div class="topBlock">
+      <p class='topTitle'>YOKELLY素人种草</p>
+      <p>做个行走的种草机，还能带走 双十一明星素颜套装哦</p>
     </div>
-    <div class="showPreload">
-      <div class="imgPreviewBox" v-for="(item,index) in localIds">
-        <img class="chose" :src="item"/>
+    <div class='inputBlock'>
+      <p>你的昵称<span>*</span></p>
+      <p class='intro'>有趣的名字快报上来~</p>
+      <input type='text' v-model="nickname" max="10" min="2" />
+    </div>
+    <div class='inputBlock'>
+      <p>联系方式<span>*</span></p>
+      <p class='intro'>快留下联系电话，要是获奖了联系不到你不就亏大了？</p>
+      <input type='number' :disabled="!phoneCanChange"  v-model="phonenumber" />
+    </div>
+    <div class='inputBlock'>
+      <p>晒图种草<span>*</span></p>
+      <p class='intro'>可上传5张，多多益善哦~</p>
+      <p class='intro1'>支持jpg,png,gif,bmp,psd等图片格式</p>
+      <div class='uploadChose' @click.stop="uploadImg">
+        <img src="../../static/img/upload.png"/>
       </div>
+      <p class='intro' v-if="localIds.length!==0">已选择{{localIds.length}}张图片</p>
     </div>
-    <p class="del" @click="localIds = []">清空图片</p>
-    <div class="mid">
+    <div class='inputBlock'>
+      <p>晒图分享<span>*</span></p>
+      <p class='intro'>说说你为什么推荐这款产品？你有什么与众不同的护肤秘籍？</p>
       <group>
-        <x-input title="手机号码" type="tel" is-type="china-mobile" :disabled="!phoneCanChange"  v-model="phonenumber"></x-input>
-        <x-input title="昵称" type="text" :min="2" :max="10" v-model="nickname"></x-input>
-      </group>
-      <group>
-        <x-textarea :max="100" placeholder="谈谈您的使用感受和心得吧~" :show-counter="true"  v-model="userFeeling"></x-textarea>
+        <x-textarea class='feeling' :max="100" placeholder="谈谈您的使用感受和心得吧~" :show-counter="true"  v-model="userFeeling"></x-textarea>
       </group>
     </div>
-
     <div class="bot">
       <x-button type="primary" @click.native="comfirmUpload">提交</x-button>
     </div>
@@ -220,6 +231,67 @@
     box-sizing: border-box;
     height: 100%;
     overflow-y: auto;
+    .topBlock{
+      background: #3A67A0;
+      border-bottom: solid 4px #2C4E7B;
+      padding: 10px 0;
+      p{
+        width: 100%;
+        text-align: center;
+        font-size: 14px;
+        color: #fff;
+      }
+      .topTitle{
+        font-size: 18px;
+      }
+    }
+    .inputBlock{
+      padding: 10px;
+      padding-bottom: 0;
+      p{
+        color:#000;
+      }
+      span{
+        color:#DB2824;
+      }
+      .intro{
+        color:#666;
+        font-size: 14px;
+      }
+      .intro1{
+        color:#999;
+        font-size: 12px;
+      }
+      input{
+        height: 2rem;
+        line-height: 2rem;
+        outline: none;
+        padding: 0 5px;
+        width:100%;
+        border: solid 1px #ddd;
+        font-size: 14px;
+        color: #333;
+      }
+      .feeling{
+        font-size: 14px;
+        color: #333;
+      }
+      .uploadChose{
+        width: 100px;
+        height: 100px;
+        border: dashed 1px #ddd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img{
+          width: 30px;
+          height: 30px;
+        }
+      }
+    }
+
+
+
     .top{
       height: 60px;
       min-height: 60px;

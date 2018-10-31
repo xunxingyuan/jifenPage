@@ -1,11 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/Home'
-import Admin from '@/components/Admin'
-import userEdit from '@/components/userEdit'
-import uploadPage from '@/components/uploadPage'
-import manage from '@/components/manage'
-import upload from '@/components/upload'
+
+const Home = () => import('../components/Home.vue')
+const Admin = () => import('../components/Admin.vue')
+const userEdit = () => import('../components/userEdit.vue')
+const uploadPage = () => import('../components/uploadPage.vue')
+const manage = () => import('../components/manage.vue')
+const upload = () => import('../components/upload.vue')
+
 
 Vue.use(Router)
 
