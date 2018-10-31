@@ -241,12 +241,6 @@
           img: '../../static/img/1.jpg'
         },{
           img: '../../static/img/2.jpg'
-        },{
-          img: '../../static/img/show/01.jpg'
-        },{
-          img: '../../static/img/show/02.jpg'
-        },{
-          img: '../../static/img/show/03.jpg'
         }]
 
         return new Promise((resolve,reject)=>{
@@ -254,7 +248,7 @@
           list1.forEach((e)=>{
             this.getImg(e.img).then(()=>{
               count+=1
-              if(count === 7){
+              if(count === 4){
                 resolve()
               }
             })
