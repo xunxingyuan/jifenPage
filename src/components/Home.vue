@@ -5,7 +5,7 @@
     </div>
     <div v-if="show" class="homePage">
       <swiper v-if="showImg"  class="imgBox" @on-index-change="onSwiperItemIndexChange" :show-desc-mask="false" :list="srcList" :show-dots="false" :interval="1500" :aspect-ratio="1181/2100" :auto="true" height="100vh"></swiper>
-      <div v-else>
+      <div class="homeBg" v-else>
         <section class="topPart">
           <x-img class="logo" src="../../static/img/logo.png"></x-img>
           <span class="intro" @click="showRuler = true">活动规则</span>
@@ -242,11 +242,7 @@
         },{
           img: '../../static/img/2.jpg'
         },{
-          img: '../../static/img/show/01.jpg'
-        },{
-          img: '../../static/img/show/02.jpg'
-        },{
-          img: '../../static/img/show/03.jpg'
+          img: '../../static/img/bg2.jpg'
         }]
 
         return new Promise((resolve,reject)=>{
@@ -254,7 +250,7 @@
           list1.forEach((e)=>{
             this.getImg(e.img).then(()=>{
               count+=1
-              if(count === 7){
+              if(count === 5){
                 resolve()
               }
             })
@@ -312,6 +308,10 @@
      }
    }
    .homePage{
+     height: 100%;
+     width: 100%;
+   }
+   .homeBg{
      background: url("../../static/img/bg2.jpg");
      background-size: cover;
      height: 100%;
