@@ -18,8 +18,11 @@
       <p>晒图种草<span>*</span></p>
       <p class='intro'>可上传5张，多多益善哦~</p>
       <p class='intro1'>支持jpg,png,gif,bmp,psd等图片格式</p>
-      <div class='uploadChose' @click.stop="uploadImg">
-        <img src="../../static/img/upload.png"/>
+
+    </div>
+    <div class='uploadChose'>
+      <div class="uploadPart" @click.stop="uploadImg">
+        <div class="addBg"></div>
       </div>
       <p class='intro' v-if="localIds.length!==0">已选择{{localIds.length}}张图片</p>
     </div>
@@ -37,6 +40,9 @@
 </template>
 
 <script>
+  import { WechatPlugin } from 'vux'
+  import Vue from 'vue'
+  Vue.use(WechatPlugin)
   import { Swiper,SwiperItem,XImg,Spinner,XTextarea,Group,XButton,XInput } from 'vux'
 
   export default {
@@ -62,13 +68,29 @@
     },
     methods:{
       _initData: function (id) {
+        let _self = this
         //获取权限
-        console.log(window.location.href)
+        let url
+        let u = navigator.userAgent, app = navigator.appVersion;
+        let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+        let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        if (isAndroid) {
+          url = "http://newmedia.yokelly.com.cn/upload"
+        }
+        if (isiOS) {
+          url = "http://newmedia.yokelly.com.cn"
+        }
+
+        // if(window.__wxjs_is_wkwebview === true){
+        //   url = "http://newmedia.yokelly.com.cn"
+        // }else {
+        //   url = "http://newmedia.yokelly.com.cn/upload"
+        // }
         this.$api.auth.getJsSign({
-          url: window.location.href
+          url: url
         }).then((res)=>{
           if(res.data.code === 200){
-            this.$wechat.config({
+            Vue.wechat.config({
               debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
               appId: res.data.data.sign.appid, // 必填，公众号的唯一标识
               timestamp: res.data.data.sign.timestamp, // 必填，生成签名的时间戳
@@ -76,13 +98,13 @@
               signature: res.data.data.sign.signature,// 必填，签名
               jsApiList: ['chooseImage', 'previewImage', 'uploadImage', 'downloadImage'] // 必填，需要使用的JS接口列表
             });
-            this.$wechat.ready(function(){
+            Vue.wechat.ready(function(){
               // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+
             });
           }
         })
 
-        let _self = this
         this.$api.user.checkInfo({
           id: id
         }).then((res)=>{
@@ -108,7 +130,9 @@
       },
       uploadImg: function () {
         let _self = this
-        this.$wechat.chooseImage({
+
+
+        _self.$wechat.chooseImage({
           count: 5, // 默认9
           sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
           sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
@@ -117,6 +141,7 @@
             console.log(res)
           }
         });
+
       },
       comfirmUpload: function () {
         let id = window.localStorage.getItem('userIdJF')
@@ -209,15 +234,16 @@
       },
     },
     mounted(){
+
       let id = window.localStorage.getItem('userIdJF')
-      window.sessionStorage.setItem('enter','1')
-      if(!id){
+      if(id){
+        this._initData(id)
+      }else{
         this.$router.push({
           name: 'home'
         })
-      }else{
-        this._initData(id)
       }
+      // this._initData(this.$route.params.id)
     }
   }
 </script>
@@ -232,8 +258,8 @@
     height: 100%;
     overflow-y: auto;
     .topBlock{
-      background: #3A67A0;
-      border-bottom: solid 4px #2C4E7B;
+      background: #EFC0C6;
+      border-bottom: solid 4px #E79AA4;
       padding: 10px 0;
       p{
         width: 100%;
@@ -246,8 +272,7 @@
       }
     }
     .inputBlock{
-      padding: 10px;
-      padding-bottom: 0;
+      padding: 10px 10px 5px 10px;
       p{
         color:#000;
       }
@@ -263,8 +288,8 @@
         font-size: 12px;
       }
       input{
-        height: 2rem;
-        line-height: 2rem;
+        height: 2.5rem;
+        line-height: 2.5rem;
         outline: none;
         padding: 0 5px;
         width:100%;
@@ -276,69 +301,36 @@
         font-size: 14px;
         color: #333;
       }
-      .uploadChose{
+
+    }
+    .uploadChose{
+      width: auto;
+      margin-top: 10px;
+      padding-left: 10px;
+      .uploadPart{
         width: 100px;
         height: 100px;
         border: dashed 1px #ddd;
         display: flex;
         align-items: center;
         justify-content: center;
-        img{
+        .addBg{
           width: 30px;
           height: 30px;
+          background: url("../../static/img/upload.png");
+          background-size: contain;
         }
       }
-    }
-
-
-
-    .top{
-      height: 60px;
-      min-height: 60px;
-      width: 90%;
-      margin: 1rem 5%;
-      border: dashed 1px #ddd;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      img{
-        width: 30px;
-        height: 30px;
+      .intro{
+        color: #666;
+        font-size: 14px;
       }
     }
-    .showPreload{
-      height: 140px;
-      min-height: 100px;
-      width: 90%;
-      border: solid 1px #ddd;
-      padding: 10px;
-      margin: 0 5%;
-      background: #fff;
-      display: flex;
-      overflow: auto;
-      .imgPreviewBox{
-        margin-right: 10px;
-        width: auto;
-        position: relative;
-        .chose{
-          height: 120px;
-          width: auto;
-        }
-      }
 
-    }
-    .del{
-      width: 100%;
-      text-align: right;
-      padding: 0 1rem;
-      color: #10aeff;
-    }
-    .mid{
-      width: 100%;
-      display: block;
-    }
+
     .bot{
       margin-top: 1rem;
+      margin-bottom: 1rem;
       width: 100%;
       padding: 0 1rem;
     }

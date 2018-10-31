@@ -5,7 +5,7 @@ import FastClick from 'fastclick'
 import App from './App'
 import router from './router/index'
 import axios from 'axios'
-import { WechatPlugin ,ConfirmPlugin ,ToastPlugin ,LoadingPlugin} from 'vux'
+import { ConfirmPlugin ,ToastPlugin ,LoadingPlugin} from 'vux'
 import api from './tools/api'
 
 import { Pagination, Select,Table,Input,Alert,Option,Button,TableColumn,MessageBox,Message } from 'element-ui';
@@ -21,7 +21,6 @@ Vue.use(Option);
 Vue.use(Button);
 Vue.use(TableColumn);
 
-Vue.use(WechatPlugin)
 Vue.use(ConfirmPlugin)
 Vue.use(ToastPlugin)
 Vue.use(LoadingPlugin)
