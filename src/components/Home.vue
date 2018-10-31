@@ -131,29 +131,29 @@
         loadingType: 'bubbles',
         swiperItemIndex: 1,
         srcList:[{
-          img: '../../static/img/1.jpg'
+          img: 'http://phgjhxlc8.bkt.clouddn.com/1.jpg'
         },{
-          img: '../../static/img/2.jpg'
+          img: 'http://phgjhxlc8.bkt.clouddn.com/2.jpg'
         }],
         showList1:[{
-          img: '../../static/img/show/01.jpg'
+          img: 'http://phgjhxlc8.bkt.clouddn.com/01.jpg'
         },{
-          img: '../../static/img/show/02.jpg'
+          img: 'http://phgjhxlc8.bkt.clouddn.com/02.jpg'
         },{
-          img: '../../static/img/show/03.jpg'
+          img: 'http://phgjhxlc8.bkt.clouddn.com/03.jpg'
         }],
         showAll:[{
-          img: '../../static/img/show/01.jpg'
+          img: 'http://phgjhxlc8.bkt.clouddn.com/01.jpg'
         },{
-          img: '../../static/img/show/02.jpg'
+          img: 'http://phgjhxlc8.bkt.clouddn.com/02.jpg'
         },{
-          img: '../../static/img/show/03.jpg'
+          img: 'http://phgjhxlc8.bkt.clouddn.com/03.jpg'
         },{
-          img: '../../static/img/show/04.jpg'
+          img: 'http://phgjhxlc8.bkt.clouddn.com/04.jpg'
         },{
-          img: '../../static/img/show/06.jpg'
+          img: 'http://phgjhxlc8.bkt.clouddn.com/06.jpg'
         },{
-          img: '../../static/img/show/07.jpg'
+          img: 'http://phgjhxlc8.bkt.clouddn.com/07.jpg'
         }],
         showImg: true,
         showRuler: false,
@@ -238,9 +238,9 @@
         },{
           img: '../../static/img/logo.png'
         },{
-          img: '../../static/img/1.jpg'
+          img: 'http://phgjhxlc8.bkt.clouddn.com/1.jpg'
         },{
-          img: '../../static/img/2.jpg'
+          img: 'http://phgjhxlc8.bkt.clouddn.com/2.jpg'
         }]
 
         return new Promise((resolve,reject)=>{
@@ -293,7 +293,7 @@
    height: 100%;
    width: 100%;
    .loadingPage{
-     background: url("../../static/img/bg1.jpg");
+     background: url("http://phgjhxlc8.bkt.clouddn.com/bg1.jpg");
      background-size: cover;
      height: 100%;
      width: 100%;
@@ -306,7 +306,7 @@
      }
    }
    .homePage{
-     background: url("../../static/img/bg2.jpg");
+     background: url("http://phgjhxlc8.bkt.clouddn.com/bg2.jpg");
      background-size: cover;
      height: 100%;
      width: 100%;
