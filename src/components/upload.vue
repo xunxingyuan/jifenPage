@@ -40,9 +40,6 @@
 </template>
 
 <script>
-  import { WechatPlugin } from 'vux'
-  import Vue from 'vue'
-  Vue.use(WechatPlugin)
   import { Swiper,SwiperItem,XImg,Spinner,XTextarea,Group,XButton,XInput } from 'vux'
 
   export default {
@@ -66,41 +63,70 @@
         phoneCanChange: true
       }
     },
+    beforeRouteEnter (to, from, next) {
+      // 修复iOS微信签名错误
+      if (from.path == '/jifen') {
+        location.assign('http://newmedia.yokelly.com.cn/upload')
+      } else {
+        next()
+      }
+    },
     methods:{
       _initData: function (id) {
         let _self = this
         //获取权限
-        let url
-        let u = navigator.userAgent, app = navigator.appVersion;
-        let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
-        let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-        if (isAndroid) {
-          url = "http://newmedia.yokelly.com.cn/upload"
-        }
-        if (isiOS) {
-          url = "http://newmedia.yokelly.com.cn"
-        }
-
-        // if(window.__wxjs_is_wkwebview === true){
-        //   url = "http://newmedia.yokelly.com.cn"
-        // }else {
-        //   url = "http://newmedia.yokelly.com.cn/upload"
-        // }
         this.$api.auth.getJsSign({
-          url: url
+          url: 'http://newmedia.yokelly.com.cn/upload'
         }).then((res)=>{
           if(res.data.code === 200){
-            Vue.wechat.config({
+            _self.$wechat.config({
               debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
               appId: res.data.data.sign.appid, // 必填，公众号的唯一标识
               timestamp: res.data.data.sign.timestamp, // 必填，生成签名的时间戳
               nonceStr: res.data.data.sign.nonceStr, // 必填，生成签名的随机串
               signature: res.data.data.sign.signature,// 必填，签名
-              jsApiList: ['chooseImage', 'previewImage', 'uploadImage', 'downloadImage'] // 必填，需要使用的JS接口列表
+              jsApiList: ['chooseImage', 'showMenuItems', 'previewImage', 'uploadImage', 'downloadImage','onMenuShareTimeline','onMenuShareAppMessage'] // 必填，需要使用的JS接口列表
             });
-            Vue.wechat.ready(function(){
+            _self.$wechat.ready(function(){
+              _self.$wechat.showOptionMenu()
               // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
-
+//              _self.$wechat.updateAppMessageShareData({
+//                title: '素人种草', // 分享标题
+//                desc: '做个行走的种草机，带走价值1290元的双11明星素颜套装。', // 分享描述
+//                link: 'newmedia.yokelly.com.cn/jifen', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+//                imgUrl: '', // 分享图标
+//                success: function () {
+//                  // 设置成功
+//                }
+//              });
+//              _self.$wechat.updateTimelineShareData({
+//                title: '素人种草', // 分享标题
+//                desc: '做个行走的种草机，带走价值1290元的双11明星素颜套装。', // 分享描述
+//                link: 'newmedia.yokelly.com.cn/jifen', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+//                imgUrl: '', // 分享图标
+//                success: function () {
+//                  // 设置成功
+//                }
+//              })
+              _self.$wechat.onMenuShareTimeline({
+                title: '素人种草', // 分享标题
+                link: 'http://newmedia.yokelly.com.cn/jifen', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: 'http://newmedia.yokelly.com.cn/show.jpg', // 分享图标
+                success: function () {
+                  // 用户点击了分享后执行的回调函数
+                }
+              })
+              _self.$wechat.onMenuShareAppMessage({
+                title: '素人种草', // 分享标题
+                desc: '做个行走的种草机，带走价值1290元的双11明星素颜套装。', // 分享描述
+                link: 'http://newmedia.yokelly.com.cn/jifen', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: 'http://newmedia.yokelly.com.cn/show.jpg', // 分享图标
+                type: '', // 分享类型,music、video或link，不填默认为link
+                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                success: function () {
+                  // 用户点击了分享后执行的回调函数
+                }
+              });
             });
           }
         })

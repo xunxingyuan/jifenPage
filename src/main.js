@@ -5,13 +5,13 @@ import FastClick from 'fastclick'
 import App from './App'
 import router from './router/index'
 import axios from 'axios'
-import { ConfirmPlugin ,ToastPlugin ,LoadingPlugin} from 'vux'
+import { WechatPlugin, ConfirmPlugin ,ToastPlugin ,LoadingPlugin} from 'vux'
 import api from './tools/api'
 
 import { Pagination, Select,Table,Input,Alert,Option,Button,TableColumn,MessageBox,Message } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
-
+Vue.use(WechatPlugin)
 Vue.use(Pagination);
 Vue.use(Select);
 Vue.use(Table);
