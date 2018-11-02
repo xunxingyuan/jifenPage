@@ -27,7 +27,7 @@
       <p class='intro' v-if="localIds.length!==0">已选择{{localIds.length}}张图片,<span @click="localIds=[]" style="color: #3a8ee6">清空图片</span></p>
       <div class="showPreload" v-if="localIds.length!==0">
         <div class="imgPreviewBox" v-for="(item,index) in localIds">
-          <img class="chose" :src="item"/>
+          <img class="chose" @click="previewItem(item)" :src="item"/>
         </div>
       </div>
     </div>
@@ -40,6 +40,9 @@
     </div>
     <div class="bot">
       <x-button type="primary" @click.native="comfirmUpload">提交</x-button>
+    </div>
+    <div class="preview" v-if="showPreview" @click="showPreview = false">
+      <img @click.stop="showPreview = false" v-if="choseSrc" :src="choseSrc" />
     </div>
   </div>
 </template>
@@ -65,7 +68,9 @@
         localIds: [],
         phonenumber: '',
         nickname: '',
-        phoneCanChange: true
+        phoneCanChange: true,
+        choseSrc: '',
+        showPreview: false
       }
     },
     beforeRouteEnter (to, from, next) {
@@ -77,6 +82,10 @@
       }
     },
     methods:{
+      previewItem: function (item) {
+        this.choseSrc = item
+        this.showPreview = true
+      },
       _initData: function (id) {
         let _self = this
         //获取权限
@@ -288,6 +297,24 @@
     box-sizing: border-box;
     height: 100%;
     overflow-y: auto;
+    .preview{
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 1000;
+      background: rgba(0,0,0,0.3);
+      padding: 1rem;
+      box-sizing: border-box;
+      overflow: auto;
+      img{
+        width: 100%;
+        height: auto;
+      }
+    }
     .topBlock{
       background: #EFC0C6;
       border-bottom: solid 4px #E79AA4;
@@ -375,6 +402,7 @@
           .chose{
             height: 120px;
             width: auto;
+            margin-right: 10px;
           }
         }
       }
