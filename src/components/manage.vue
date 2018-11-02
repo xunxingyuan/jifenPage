@@ -21,7 +21,7 @@
               :value="item.value">
             </el-option>
           </el-select>
-          <el-input class="input" v-model="userInput" v-if="selectUserType!=='0'"></el-input> <el-button @click="searchUser" type="primary">搜索</el-button>
+          <el-input class="input" v-model="userInput" v-if="selectUserType!=='0'"></el-input> <el-button @click="searchUser(1)" type="primary">搜索</el-button>
         </div>
           <div>
             <div>
@@ -95,7 +95,7 @@
               :value="item.value">
             </el-option>
           </el-select>
-          <el-input class="input" v-model="uploadInput" placeholder="支持用户名、手机号、用户心得" ></el-input> <el-button @click.native="searchUpload" type="primary">搜索</el-button>
+          <el-input class="input" v-model="uploadInput" placeholder="支持用户名、手机号、用户心得" ></el-input> <el-button @click.native="searchUpload(1)" type="primary">搜索</el-button>
         </div>
         <div>
           <div>
@@ -290,7 +290,10 @@
           this.getNotice()
         }
       },
-      searchUser: function () {
+      searchUser: function (item) {
+        if(item === 1){
+          this.userCtrl.page = 0
+        }
         let data = {
           text: this.userInput,
           type: this.selectUserType,
@@ -301,7 +304,10 @@
           this.userCtrl.total = res.data.data.total
         })
       },
-      searchUpload: function () {
+      searchUpload: function (item) {
+        if(item === 1){
+          this.uploadCtrl.page = 0
+        }
         let data = {
           text: this.uploadInput,
           type: this.uploadType,
