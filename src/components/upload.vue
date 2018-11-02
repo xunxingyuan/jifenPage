@@ -338,6 +338,7 @@
       width: auto;
       margin-top: 10px;
       padding-left: 10px;
+      box-sizing: border-box;
       .uploadPart{
         width: 100px;
         height: 100px;
@@ -360,10 +361,10 @@
       .showPreload{
         height: 140px;
         min-height: 100px;
-        width: 90%;
+        width: 100%;
+        box-sizing: border-box;
         border: solid 1px #ddd;
         padding: 10px;
-        margin: 0 5%;
         background: #fff;
         display: flex;
         overflow: auto;
