@@ -24,7 +24,12 @@
       <div class="uploadPart" @click.stop="uploadImg">
         <div class="addBg"></div>
       </div>
-      <p class='intro' v-if="localIds.length!==0">已选择{{localIds.length}}张图片</p>
+      <p class='intro' v-if="localIds.length!==0">已选择{{localIds.length}}张图片,<span @click="localIds=[]" style="color: #3a8ee6">清空图片</span></p>
+      <div class="showPreload" v-if="localIds.length!==0">
+        <div class="imgPreviewBox" v-for="(item,index) in localIds">
+          <img class="chose" :src="item"/>
+        </div>
+      </div>
     </div>
     <div class='inputBlock'>
       <p>晒图分享<span>*</span></p>
@@ -350,6 +355,26 @@
       .intro{
         color: #666;
         font-size: 14px;
+        margin: 5px 0;
+      }
+      .showPreload{
+        height: 140px;
+        min-height: 100px;
+        width: 90%;
+        border: solid 1px #ddd;
+        padding: 10px;
+        margin: 0 5%;
+        background: #fff;
+        display: flex;
+        overflow: auto;
+        .imgPreviewBox{
+          width: auto;
+          position: relative;
+          .chose{
+            height: 120px;
+            width: auto;
+          }
+        }
       }
     }
 

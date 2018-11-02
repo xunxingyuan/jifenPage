@@ -82,11 +82,11 @@
             <x-img class="logo" src="../../static/img/logo.png"></x-img>
             <p class="title">规则说明：</p>
             <p class="ruler">1、参与方式：在各大分享平台（如微博、微信朋友圈、小红书等）晒出您对悦嘉丽[comfort zone]舒适地带产品的评价，并截图上传至“素人种草”活动；</p>
-            <p class="ruler">2、活动时间：11月01日-11月07日</p>
-            <p class="ruler">   评选时间：11月08日-11月11日</p>
-            <p class="ruler">   获奖公布时间：11月12日</p>
+            <p class="ruler">2、活动时间：11月02日-11月07日</p>
+            <p class="ruler">   评选时间：11月08日-11月10日</p>
+            <p class="ruler">   获奖公布时间：11月11日</p>
             <p class="ruler">3、活动奖品：票数最高的前10名，将获得价值1290元的双11明星素颜套装（套装含：3支正装每日晶采爽肤水）；</p>
-            <p class="ruler">4、晒图规则：不可重复上传相同内容，不可上传他人的晒图，否则会被判定审核不通过；工作人员将在5个工作日内完成图片审核，请您耐心等待；</p>
+            <p class="ruler">4、晒图规则：不可重复上传相同内容，不可上传他人的晒图，否则会被判定审核不通过；工作人员将在3个工作日内完成图片审核，请您耐心等待；</p>
             <p class="ruler">*凡用户参与晒图活动并上传图片，即视图片版权为用户本人所有并授权悦嘉丽官方使用。</p>
             <div class="btnBox"><button class="btn" @click="start">马上参与</button></div>
             <span class="close" @click="showRuler = false">
