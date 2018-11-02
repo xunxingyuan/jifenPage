@@ -338,6 +338,7 @@
       width: auto;
       margin-top: 10px;
       padding-left: 10px;
+      padding-right: 10px;
       box-sizing: border-box;
       .uploadPart{
         width: 100px;
