@@ -12,10 +12,29 @@ function postForm(url,data) {
 }
 
 export default {
+  common:{
+    //页面计数
+    countEnter: (data)=>{
+      return get('/api/count/enter',data)
+    },
+    //获取结果计数
+    countResult: (data)=>{
+      return get('/api/count/result',data)
+    }
+  },
   auth: {
     //获取code
     getAuth: (data)=>{
       return get('/api/auth/getAuth',data)
+    },
+    //获取信息code
+    getInfoAuth: (data)=>{
+      return get('/api/auth/getInfoAuth',data)
+    },
+    //获取Info token
+
+    getInfoToken: (data)=>{
+      return get('/api/auth/getInfoToken',data)
     },
     //获取token
     getToken: (data)=>{
@@ -50,7 +69,13 @@ export default {
     //获取用户上传列表
     getUserUpload: (data)=>{
       return get('/api/user/getUpload',data)
-    }
+    },
+    //鉴权用户检查
+    checkAuthInfo: (data)=>{
+      return get('/api/user/checkAuthInfo',data)
+    },
+
+
   },
   admin:{
     login: (data)=>{

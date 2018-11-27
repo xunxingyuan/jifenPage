@@ -177,7 +177,7 @@
         let _self = this
         let id = window.localStorage.getItem('userIdJF')
         if(id){
-          this.$api.auth.updateToken({
+          this.$api.user.checkInfo({
             id: id
           }).then((res)=>{
             if(res.data.code === 200){
@@ -198,9 +198,6 @@
                 window.localStorage.setItem('userIdJF',res.data.data.id)
               }
             })
-
-
-
           }
         }
         this.$api.auth.getJsSign({
