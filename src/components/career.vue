@@ -10,7 +10,7 @@
       </div>
       <div class="optionBox" v-if="showOption">
         <transition name="slide-fade">
-          <p v-if="showOptionData">{{selectOption.question}}</p>
+          <p>{{selectOption.question}}</p>
         </transition>
         <div v-for="item in selectOption.options" :key="item.id">
             <transition name="slide-fade">
@@ -149,7 +149,7 @@ import { setTimeout } from 'timers';
       }
     } //过渡效果
     .slide-fade-enter-active {
-      transition: all 1s ease-in-out;
+      transition: all 0.8s ease-in-out;
     }
     .slide-fade-leave-active {
       transition: all .5s ease;
