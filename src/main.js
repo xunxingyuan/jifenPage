@@ -11,6 +11,8 @@ import api from './tools/api'
 import { Pagination, Select,Table,Input,Alert,Option,Button,TableColumn,MessageBox,Message } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
+
+Vue.use(require('vue-wechat-title'))
 Vue.use(WechatPlugin)
 Vue.use(Pagination);
 Vue.use(Select);
