@@ -17,10 +17,14 @@ export default {
     countEnter: (data)=>{
       return get('/api/count/enter',data)
     },
-    //获取结果计数
+    //结果计数
     countResult: (data)=>{
       return get('/api/count/result',data)
-    }
+    },
+    //分享计数
+    countShare:(data)=>{
+      return get('/api/count/share',data)
+    },
   },
   auth: {
     //获取code

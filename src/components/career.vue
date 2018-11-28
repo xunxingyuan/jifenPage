@@ -13,9 +13,9 @@
           <p>{{selectOption.question}}</p>
         </transition>
         <div v-for="item in selectOption.options" :key="item.id">
-            <transition name="slide-fade">
-              <p v-if="showOptionData" @click="choseOptionData(item)">{{item.content}}</p>
-            </transition>
+          <transition name="slide-fade">
+            <p v-if="showOptionData" @click="choseOptionData(item)">{{item.content}}</p>
+          </transition>
         </div>
       </div>
     </div>
@@ -33,7 +33,9 @@
 
 <script>
   import html2canvas from 'html2canvas'
-import { setTimeout } from 'timers';
+  import {
+    setTimeout
+  } from 'timers';
   export default {
     components: {},
     name: "",
@@ -51,7 +53,7 @@ import { setTimeout } from 'timers';
             jump: 3,
             resultId: ''
           }]
-        },{
+        }, {
           id: 2,
           question: '在家里睡到自然醒，时间富余，你会:',
           options: [{
@@ -63,7 +65,7 @@ import { setTimeout } from 'timers';
             jump: 6,
             resultId: ''
           }]
-        },{
+        }, {
           id: 3,
           question: '你打电话给约最好的朋友一起去玩，但她有点事走不开，你会：',
           options: [{
@@ -75,7 +77,7 @@ import { setTimeout } from 'timers';
             jump: 7,
             resultId: ''
           }]
-        },{
+        }, {
           id: 4,
           question: '你在家里做着手头的事情，一个朋友突然发信息约你见面，你会：',
           options: [{
@@ -87,7 +89,7 @@ import { setTimeout } from 'timers';
             jump: 10,
             resultId: ''
           }]
-        },{
+        }, {
           id: 5,
           question: '终于和朋友一起到了酒吧，服务员向你推荐新品，你会：',
           options: [{
@@ -99,7 +101,7 @@ import { setTimeout } from 'timers';
             jump: 11,
             resultId: ''
           }]
-        },{
+        }, {
           id: 6,
           question: '你在家里做着手头的事情，一个朋友突然发信息约你见面，你会：',
           options: [{
@@ -111,7 +113,7 @@ import { setTimeout } from 'timers';
             jump: 10,
             resultId: ''
           }]
-        },{
+        }, {
           id: 7,
           question: '终于和朋友一起到了酒吧，服务员向你推荐新品，你会：',
           options: [{
@@ -123,7 +125,7 @@ import { setTimeout } from 'timers';
             jump: 11,
             resultId: ''
           }]
-        },{
+        }, {
           id: 8,
           question: '对于选择享受独处的私人时光，你的看法是：',
           options: [{
@@ -135,7 +137,7 @@ import { setTimeout } from 'timers';
             jump: 13,
             resultId: ''
           }]
-        },{
+        }, {
           id: 9,
           question: '你和你的朋友在酒吧中玩的正嗨，突然有一群男子前来搭讪，你会：',
           options: [{
@@ -146,12 +148,12 @@ import { setTimeout } from 'timers';
             content: '客气交谈，但会保持距离',
             jump: 0,
             resultId: 1
-          },{
+          }, {
             content: '出来玩，就应该开开心心的交朋友',
             jump: 0,
             resultId: 3
           }]
-        },{
+        }, {
           id: 10,
           question: '招待完朋友，天色已晚，你会：',
           options: [{
@@ -163,7 +165,7 @@ import { setTimeout } from 'timers';
             jump: 13,
             resultId: ''
           }]
-        },{
+        }, {
           id: 11,
           question: '你和你的朋友在酒吧中玩的正嗨，突然有一群男子前来搭讪，你会：',
           options: [{
@@ -174,12 +176,12 @@ import { setTimeout } from 'timers';
             content: '客气交谈，但会保持距离',
             jump: 0,
             resultId: 1
-          },{
+          }, {
             content: '出来玩，就应该开开心心的交朋友',
             jump: 0,
             resultId: 3
           }]
-        },{
+        }, {
           id: 12,
           question: '你一个人坐在家里看电视，窗外突然“砰”的发出一声巨响，你会：',
           options: [{
@@ -195,7 +197,7 @@ import { setTimeout } from 'timers';
             jump: 0,
             resultId: 5
           }]
-        },{
+        }, {
           id: 13,
           question: '你一个人坐在家里看电视，窗外突然“砰”的发出一声巨响，你会：',
           options: [{
@@ -230,39 +232,39 @@ import { setTimeout } from 'timers';
         showHome: true,
         showOption: false,
         showOptionData: false,
-        showResult:{
+        showResult: {
           id: 1,
           name: '狐狸',
           type: 'E-外向 S-感觉 T-思维 P-知觉',
           content: '你是一个引人注目、充满魅力和影响力的人，一直在寻找生活中最好的事物，并希望与朋友分享。你活跃、有趣，对生活饱含热情，你们知道如何适应环境，从而影响他人，社交能力极强，是一个很有感染力、善于调动人力和部署项目的实干者。'
         },
         bindCss: '',
-        resultList:[{
+        resultList: [{
           id: 1,
           name: '狐狸',
           type: 'E-外向 S-感觉 T-思维 P-知觉',
           content: '你是一个引人注目、充满魅力和影响力的人，一直在寻找生活中最好的事物，并希望与朋友分享。你活跃、有趣，对生活饱含热情，你们知道如何适应环境，从而影响他人，社交能力极强，是一个很有感染力、善于调动人力和部署项目的实干者。'
-        },{
+        }, {
           id: 2,
           name: '狮子',
           type: 'E-外向 N-直觉 T-思维 J-判断',
           content: '你的独立性、理性思维主导着你的生活，你做事一丝不苟，对自己的价值观十分忠诚。你很看中自己的事业，对自己未来的发展有着坚定的追求。工作中你们拒绝让主观情绪影响自己的决策，可能会让一些人认为是铁石心肠，但作为领导者，总要为团队作出普通人无法判断的决定。'
-        },{
+        }, {
           id: 3,
           name: '海豚',
           type: 'E-外向 N-直觉  F-情感  P-知觉',
           content: '你是一个饱含热情、极富想象的人。比常人更具有创造力和感染力，有无限的能量，极其渴望学习新事物和结识新朋友。你们常常能给身边的人带来快乐并敏锐的意识到他们的需求，人缘很好。'
-        },{
+        }, {
           id: 4,
           name: '猫',
           type: 'I-内向 S-感觉 T-思维 P-知觉',
           content: '你天生安静、擅长分析，对设计、开发这样的技术领域富有很高的热情，总喜欢搞清楚事情的来龙去脉。你是个很冷静的观察者，灵活度和反应力极高，对常规和戒律不屑一顾，对不熟的人来说，你高冷有距离感，但对于朋友，你是个有趣、值得深交的人才。'
-        },{
+        }, {
           id: 5,
           name: '鹿',
           type: 'I-内向 S-感觉 F-情感  J-判断',
           content: '你是一个体贴、安静并值得信任的人。你能在每一个人身上看到潜力，你也非常乐于帮助别人把他的能力发挥到极致。你总是在推动个人发展和团队成长。在生活中，你对赞美和批评比较敏感，有些情绪化，但却能让人感觉到亲切，并给予信赖。'
-        },{
+        }, {
           id: 6,
           name: '树懒',
           type: 'I-内向 S-感觉 F-情感  P-知觉',
@@ -274,95 +276,90 @@ import { setTimeout } from 'timers';
       cutImg: function() {
         let _self = this
         let picDom = document.querySelector(".showBox");
-        console.log(picDom.offsetWidth)
-        console.log(picDom.offsetHeight)
         let width = picDom.offsetWidth;
         let height = picDom.offsetHeight;
         let scaleBy = 3; //缩放比例
-        console.log(window.devicePixelRatio)
         let opts = {
-          //            canvas:canvas,
           logging: false, //日志开关
           width: width,
           height: height,
           scale: scaleBy
         };
         html2canvas(picDom, opts).then(canvas => {
-          console.log(canvas)
           _self.captureData = canvas.toDataURL();
           _self.captureShow = true
         });
       },
-      beginTest: function () {
+      beginTest: function() {
         this.showHome = false
         this.showOption = true
-        setTimeout(()=>{
+        setTimeout(() => {
           this.showOptionData = true
-        },500)
+        }, 500)
       },
       choseOptionData: function(item) {
-        if(item.jump === 0){
+        if (item.jump === 0) {
           this.showOptionData = false
           this.showOption = false
-          this.resultList.forEach((e)=>{
-            if(e.id === item.resultId){
-              this.showResult =  e
-              setTimeout(()=>{
+          this.resultList.forEach((e) => {
+            if (e.id === item.resultId) {
+              this.showResult = e
+              setTimeout(() => {
                 this.cutImg()
-              },1000)
+              }, 1000)
             }
           })
-        }else{
+        } else {
           this.showOptionData = false
           this.showOption = false
           this.questionList.forEach(element => {
             if (element.id === item.jump) {
               this.selectOption = element
               this.showOption = true
-              setTimeout(()=>{
+              setTimeout(() => {
                 this.showOptionData = true
-              },500)
+              }, 500)
             }
           });
         }
       },
-      checkUser: function () {
+      checkUser: function() {
         let _self = this
         let id = window.localStorage.getItem('userIdCareer')
-        if(id){
+        if (id) {
           this.$api.user.checkAuthInfo({
             id: id
-          }).then((res)=>{
-            if(res.data.code === 200){
+          }).then((res) => {
+            if (res.data.code === 200) {
               console.log('user comfirm')
-            }else{
+            } else {
               window.localStorage.removeItem('userIdCareer')
               this.redirectLocation()
             }
           })
-        }else{
-          if(!this.$route.query.hasOwnProperty('code')){
+        } else {
+          if (!this.$route.query.hasOwnProperty('code')) {
             this.redirectLocation()
-          }else{
+          } else {
             this.$api.auth.getInfoToken({
               code: this.$route.query.code
-            }).then((res)=>{
-              if(res.data.code === 200){
-                window.localStorage.setItem('userIdCareer',res.data.data.id)
+            }).then((res) => {
+              if (res.data.code === 200) {
+                window.localStorage.setItem('userIdCareer', res.data.data.id)
               }
             })
           }
         }
       },
-      redirectLocation: function () {
-        this.$api.auth.getInfoAuth().then((res)=>{
-          if(res.data.code === 200){
+      redirectLocation: function() {
+        this.$api.auth.getInfoAuth().then((res) => {
+          if (res.data.code === 200) {
             window.location = res.data.data.url
           }
         })
       },
     },
-    mounted(){
+    mounted() {
       this.checkUser()
     }
   }
@@ -373,7 +370,7 @@ import { setTimeout } from 'timers';
     height: 100%;
     width: 100%;
     overflow: auto;
-    .coverBox{
+    .coverBox {
       width: 100%;
       height: 100%;
       background: #fff;
@@ -414,7 +411,7 @@ import { setTimeout } from 'timers';
       transform: translateX(50px);
       opacity: 0;
     }
-    .slide-fade-leave-to{
+    .slide-fade-leave-to {
       transform: translateX(-50px);
       opacity: 0;
     }
