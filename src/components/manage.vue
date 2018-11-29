@@ -175,10 +175,10 @@
           <span class="topNav">数据概况</span>
         </div>
         <div>
-          <p>参与总用户数：</p>
-          <p>页面点击数：</p>
-          <p>完成测试用户数：</p>
-          <p>页面分享成功次数：</p>
+          <p>参与总用户数：{{countData.userCount}}</p>
+          <p>首页点击量：{{countData.viewCount}}</p>
+          <p>完成测试用户数：{{countData.resultCount}}</p>
+          <p>页面分享成功次数：{{countData.shareCount}}</p>
         </div>
       </div>
     </div>
@@ -258,7 +258,14 @@ export default {
       confirmFail: "",
       confirmFailBottom: "",
       comfirmSuccess: "",
-      comfirmSuccessBottom: ""
+      comfirmSuccessBottom: "",
+      //统计数据
+      countData:{
+        "userCount": 0,
+        "viewCount": 0,
+        "resultCount": 0,
+        "shareCount": 0
+      }
     };
   },
   methods: {
@@ -466,7 +473,9 @@ export default {
       });
     },
     getTestData() {
-      this.$api.admin.getCareerData();
+      this.$api.admin.getCareerData().then((res)=>{
+        this.countData = res.data.data
+      })
     }
   },
   mounted() {
