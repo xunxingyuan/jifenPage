@@ -18,6 +18,14 @@ module.exports = {
         pathRewrite: {
           '/api' : '/',     // rewrite path
         },
+      },
+      '/wxSrc':{
+        target: 'http://thirdwx.qlogo.cn/',
+        // target: 'http://47.91.156.77:3000/',
+        changeOrigin: true,
+        pathRewrite: {
+          '/wxSrc' : '/',     // rewrite path
+        },
       }
     },
 

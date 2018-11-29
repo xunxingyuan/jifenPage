@@ -2,11 +2,12 @@
   <div class="career">
     <div class="coverBox">
       <div class="introduce" v-if="showHome">
-        <p>测测你的创业风格是哪种动物？</p>
-        <p>不同的性格和偏好伴随着生活经历</p>
-        <p>会成就每个人不同的事业结果</p>
-        <p>在创业时代，哪种动物能代表你的创业人格？</p>
-        <button @click="beginTest">开始测试</button>
+        <!--<p>测测你的创业风格是哪种动物？</p>-->
+        <!--<p>不同的性格和偏好伴随着生活经历</p>-->
+        <!--<p>会成就每个人不同的事业结果</p>-->
+        <!--<p>在创业时代，哪种动物能代表你的创业人格？</p>-->
+        <!--<button @click="beginTest">开始测试</button>-->
+        <div @click="beginTest" class="enter"></div>
       </div>
       <div class="optionBox" v-if="showOption">
         <transition name="slide-fade">
@@ -14,7 +15,7 @@
         </transition>
         <div v-for="item in selectOption.options" :key="item.id">
             <transition name="slide-fade">
-              <p v-if="showOptionData" @click="choseOptionData(item)">{{item.content}}</p>
+              <p v-if="showOptionData"  @click="choseOptionData(item)">{{item.content}}</p>
             </transition>
         </div>
       </div>
@@ -23,9 +24,35 @@
       <img :src="captureData" />
     </div>
     <div class="showBox">
-      <p>{{showResult.name}}</p>
-      <p>{{showResult.type}}</p>
-      <p>{{showResult.content}}</p>
+      <div class="topPart">
+        <div class="topLeft">
+          <img crossorigin="anonymous" class="userIcon" :src="userInfo.img"/>
+          <p class="name">{{userInfo.name}}</p>
+        </div>
+        <img class="titleImg" src="../../static/career/title.png" />
+      </div>
+      <div class="midPart">
+        <div class="topInner">
+          <div class="pic">
+
+          </div>
+          <div class="intro">
+            <div class="introTitle">
+              <p>{{showResult.name}}</p>
+              <span>{{showResult.en}}</span>
+            </div>
+            <div class="introBot">{{showResult.type}}</div>
+          </div>
+        </div>
+        <div class="midInner">
+          {{showResult.content}}
+        </div>
+      </div>
+      <div class="botPart"></div>
+
+      <!--<p>{{showResult.name}}</p>-->
+      <!--<p>{{showResult.type}}</p>-->
+      <!--<p>{{showResult.content}}</p>-->
     </div>
     <!-- <button @click="cutImg">截图</button> -->
   </div>
@@ -232,6 +259,7 @@ import { setTimeout } from 'timers';
         showOptionData: false,
         showResult:{
           id: 1,
+          en: 'FOX',
           name: '狐狸',
           type: 'E-外向 S-感觉 T-思维 P-知觉',
           content: '你是一个引人注目、充满魅力和影响力的人，一直在寻找生活中最好的事物，并希望与朋友分享。你活跃、有趣，对生活饱含热情，你们知道如何适应环境，从而影响他人，社交能力极强，是一个很有感染力、善于调动人力和部署项目的实干者。'
@@ -239,38 +267,64 @@ import { setTimeout } from 'timers';
         bindCss: '',
         resultList:[{
           id: 1,
+          en: 'FOX',
           name: '狐狸',
           type: 'E-外向 S-感觉 T-思维 P-知觉',
           content: '你是一个引人注目、充满魅力和影响力的人，一直在寻找生活中最好的事物，并希望与朋友分享。你活跃、有趣，对生活饱含热情，你们知道如何适应环境，从而影响他人，社交能力极强，是一个很有感染力、善于调动人力和部署项目的实干者。'
         },{
           id: 2,
+          en: 'LION',
           name: '狮子',
           type: 'E-外向 N-直觉 T-思维 J-判断',
           content: '你的独立性、理性思维主导着你的生活，你做事一丝不苟，对自己的价值观十分忠诚。你很看中自己的事业，对自己未来的发展有着坚定的追求。工作中你们拒绝让主观情绪影响自己的决策，可能会让一些人认为是铁石心肠，但作为领导者，总要为团队作出普通人无法判断的决定。'
         },{
           id: 3,
+          en: 'DOLPHIN',
           name: '海豚',
           type: 'E-外向 N-直觉  F-情感  P-知觉',
           content: '你是一个饱含热情、极富想象的人。比常人更具有创造力和感染力，有无限的能量，极其渴望学习新事物和结识新朋友。你们常常能给身边的人带来快乐并敏锐的意识到他们的需求，人缘很好。'
         },{
           id: 4,
+          en: 'CAT',
           name: '猫',
           type: 'I-内向 S-感觉 T-思维 P-知觉',
           content: '你天生安静、擅长分析，对设计、开发这样的技术领域富有很高的热情，总喜欢搞清楚事情的来龙去脉。你是个很冷静的观察者，灵活度和反应力极高，对常规和戒律不屑一顾，对不熟的人来说，你高冷有距离感，但对于朋友，你是个有趣、值得深交的人才。'
         },{
+          en: 'DEER',
           id: 5,
           name: '鹿',
           type: 'I-内向 S-感觉 F-情感  J-判断',
           content: '你是一个体贴、安静并值得信任的人。你能在每一个人身上看到潜力，你也非常乐于帮助别人把他的能力发挥到极致。你总是在推动个人发展和团队成长。在生活中，你对赞美和批评比较敏感，有些情绪化，但却能让人感觉到亲切，并给予信赖。'
         },{
+          en: 'SLOTH',
           id: 6,
           name: '树懒',
           type: 'I-内向 S-感觉 F-情感  P-知觉',
           content: '和你这类人待在一起时，总会让人感觉放松而静谧。你生活随性、洒脱，喜欢按照自己的节奏生活，随时随地享受生活。你体贴、关心身边的朋友，你们认为价值观对自己很重要，但又不是那种会为了价值观去奋力一拼的人。'
-        }]
+        }],
+        userInfo: {
+          name: '',
+          img: ''
+        }
       }
     },
     methods: {
+      //头像转base64
+      img2base64(url,src) {
+        const img = new Image();
+        img.crossOrigin = "Anonymous"
+        img.src = url
+        img.onload = () => {
+          const c = document.createElement('canvas');
+          c.width = img.naturalWidth;
+          c.height = img.naturalHeight;
+          const cxt = c.getContext('2d');
+          cxt.drawImage(img, 0, 0);
+          // 得到图片的base64编码数据
+          src = c.toDataURL('image/png')
+          console.log(src)
+        }
+      },
       cutImg: function() {
         let _self = this
         let picDom = document.querySelector(".showBox");
@@ -285,7 +339,8 @@ import { setTimeout } from 'timers';
           logging: false, //日志开关
           width: width,
           height: height,
-          scale: scaleBy
+          scale: scaleBy,
+          allowTaint:true
         };
         html2canvas(picDom, opts).then(canvas => {
           console.log(canvas)
@@ -334,7 +389,10 @@ import { setTimeout } from 'timers';
             id: id
           }).then((res)=>{
             if(res.data.code === 200){
-              console.log('user comfirm')
+              this.userInfo.name = res.data.data.nickname
+
+              //this.img2base64(res.data.data.headimgurl,this.userInfo.img)
+              this.userInfo.img = res.data.data.headimgurl.replace('http://thirdwx.qlogo.cn/','/wxSrc/')
             }else{
               window.localStorage.removeItem('userIdCareer')
               this.redirectLocation()
@@ -349,6 +407,7 @@ import { setTimeout } from 'timers';
             }).then((res)=>{
               if(res.data.code === 200){
                 window.localStorage.setItem('userIdCareer',res.data.data.id)
+                this.checkUser()
               }
             })
           }
@@ -373,11 +432,35 @@ import { setTimeout } from 'timers';
     height: 100%;
     width: 100%;
     overflow: auto;
+    background: #F8C2C2;
     .coverBox{
       width: 100%;
       height: 100%;
       background: #fff;
-      padding: 1rem;
+      .introduce{
+        width: 100%;
+        height: 100%;
+        background: url("../../static/career/home.jpg");
+        background-size: 100% 100%;
+        .enter{
+          position: absolute;
+          left: 0;
+          bottom: 10%;
+          width: 100%;
+          height: 20%;
+        }
+      }
+      .optionBox{
+        width: 100%;
+        height: 100%;
+        background: url("../../static/career/bg.jpg");
+        background-size: 100% 100%;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        justify-content: center;
+        padding: 10%;
+      }
     }
     .showBox {
       width: 100%;
@@ -386,7 +469,99 @@ import { setTimeout } from 'timers';
       left: 0;
       top: 0;
       z-index: -1;
-      padding: 1rem;
+      /*padding: 1rem;*/
+      background: #F8C2C2;
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+      justify-content: center;
+      .topPart{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .titleImg{
+          width: 180px;
+          margin-left: 1rem;
+        }
+        .topLeft{
+          text-align: center;
+          display: flex;
+          flex-flow: column;
+          align-items: center;
+          justify-content: center;
+          .userIcon{
+            margin-top: 10px;
+            margin-bottom: 10px;
+            width: 72px;
+            height: 72px;
+            border-radius: 36px;
+          }
+          .name{
+            width: 100px;
+            text-align: center;
+            line-height: 1.5;
+            font-weight: 600;
+            color: #231816;
+          }
+        }
+      }
+      .midPart{
+        width: 80vw;
+        height: 80vw;
+        background: url("../../static/career/result.png");
+        background-size: 100% 100%;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        position: relative;
+        .topInner{
+          width: 100%;
+          height: 52%;
+          display: flex;
+          .pic{
+            width: 38%;
+          }
+          .intro{
+            width: 62%;
+            height: 100%;
+            .introTitle{
+              height: 68%;
+              display: flex;
+              flex-flow: column;
+              align-items: center;
+              justify-content: center;
+              padding-top: 10%;
+              p{
+                font-size: 28px;
+                font-weight: 600;
+              }
+              span{
+                font-size: 14px;
+              }
+            }
+            .introBot{
+              height: 32%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 12px;
+              color: #323232;
+            }
+          }
+
+        }
+        .midInner{
+          font-size: 14px;
+          padding: 1rem;
+          line-height: 1.3;
+          color: #323232;
+        }
+      }
+      .botPart{
+        width: 80vw;
+        height: 21vw;
+        background: url("../../static/career/bot.jpg");
+        background-size: 100% 100%;
+      }
     }
     .resultBox {
       width: 100%;
