@@ -177,7 +177,7 @@
         <div>
           <p>参与总用户数：{{countData.userCount}}</p>
           <p>首页点击量：{{countData.viewCount}}</p>
-          <p>完成测试用户数：{{countData.resultCount}}</p>
+          <p>测试完成数量：{{countData.resultCount}}</p>
           <p>页面分享成功次数：{{countData.shareCount}}</p>
         </div>
       </div>

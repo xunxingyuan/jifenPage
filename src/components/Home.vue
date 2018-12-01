@@ -233,7 +233,6 @@
                   // 用户点击了分享后执行的回调函数
                 }
               });
-
             });
           }
         })
@@ -280,7 +279,6 @@
         },{
           img: 'http://phgjhxlc8.bkt.clouddn.com/2.jpg'
         }]
-
         return new Promise((resolve,reject)=>{
           let count = 0
           list1.forEach((e)=>{
@@ -291,7 +289,6 @@
               }
             })
           })
-
         })
       },
       getImg: function (url) {
