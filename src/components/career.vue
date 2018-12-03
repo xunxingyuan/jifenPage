@@ -36,7 +36,7 @@
               <!--<div class="lineBox"></div>-->
               <!--<div class="lineBox"></div>-->
               <!--<div class="lineBox"></div>-->
-              <p class="outside">{{step}}、{{selectOption.question}}</p>
+              <p class="outside">{{step}}.{{selectOption.question}}</p>
             </div>
           </div>
 
@@ -131,7 +131,7 @@ export default {
               resultId: ""
             },
             {
-              content: "约上好友去酒吧痛痛快快放松一下",
+              content: "约上好友出门痛痛快快放松一下",
               jump: 3,
               resultId: ""
             }
@@ -142,12 +142,12 @@ export default {
           question: "在家里睡到自然醒,时间富余,你会?",
           options: [
             {
-              content: "找点事情来充实自己,绘画、插花或为自己做个健康早餐",
+              content: "找点事情来充实自己,绘画.插花或为自己做个健康早餐",
               jump: 4,
               resultId: ""
             },
             {
-              content: "点个外卖,躺在床上翻翻微博朋友圈",
+              content: "点个外卖,躺在床上玩玩手机翻翻朋友圈",
               jump: 6,
               resultId: ""
             }
@@ -235,7 +235,7 @@ export default {
         },
         {
           id: 8,
-          question: "对于选择享受独处的私人时光,你的看法是?",
+          question: "你是怎么看待自己独处的私人时光?",
           options: [
             {
               content: "一个人的状态更自由,无拘无束",
@@ -243,7 +243,7 @@ export default {
               resultId: ""
             },
             {
-              content: "工作比较忙碌,只是想调整作息",
+              content: "工作忙碌，这只是用来调整作息",
               jump: 13,
               resultId: ""
             }
@@ -280,7 +280,7 @@ export default {
               resultId: ""
             },
             {
-              content: "随便逛逛吃吃,买些小东西再回家",
+              content: "在外面晃悠一下再回家",
               jump: 13,
               resultId: ""
             }
@@ -360,7 +360,7 @@ export default {
             resultId: ""
           },
           {
-            content: "约上好友去酒吧痛痛快快放松一下",
+            content: "约上好友出门痛痛快快放松一下",
             jump: 3,
             resultId: ""
           }
@@ -379,7 +379,7 @@ export default {
         desc: "让当下的事情有条不紊的进行",
         img: "http://newmedia.yokelly.com.cn/src/fox.jpg",
         content:
-          "你是一个引人注目、充满魅力和影响力的人,一直在寻找生活中最好的事物,并希望与朋友分享。你活跃、有趣,对生活饱含热情,社交能力极强,知道如何适应环境,从而影响他人,是一个善于调动人力和部署项目的管理型创业人才。"
+          "你是一个引人注目.充满魅力和影响力的人,一直在寻找生活中最好的事物,并希望与朋友分享。你活跃.有趣,对生活饱含热情,社交能力极强,知道如何适应环境,从而影响他人,是一个善于调动人力和部署项目的管理型创业人才。"
       },
       bindCss: "",
       resultList: [
@@ -391,7 +391,7 @@ export default {
           desc: "让当下的事情有条不紊的进行",
           img: "http://newmedia.yokelly.com.cn/src/fox.jpg",
           content:
-            "你是一个引人注目、充满魅力和影响力的人,一直在寻找生活中最好的事物,并希望与朋友分享。你活跃、有趣,对生活饱含热情,社交能力极强,知道如何适应环境,从而影响他人,是一个善于调动人力和部署项目的管理型创业人才。"
+            "你是一个引人注目.充满魅力和影响力的人,一直在寻找生活中最好的事物,并希望与朋友分享。你活跃.有趣,对生活饱含热情,社交能力极强,知道如何适应环境,从而影响他人,是一个善于调动人力和部署项目的管理型创业人才。"
         },
         {
           id: 2,
@@ -401,7 +401,7 @@ export default {
           img: "http://newmedia.yokelly.com.cn/src/lion.jpg",
           type: "E-外向 N-直觉 T-思维 J-判断",
           content:
-            "你的独立性、理性思维主导着你的生活,你做事一丝不苟,对自己的价值观十分忠诚。你很看中自己的事业,对自己未来的发展有着坚定的追求。工作中你拒绝让主观情绪影响自己的决策,可能会让一些人认为是铁石心肠。但在团队中,你是一个能作出普通人无法判断的决定、主持大局的领导型创业人才。"
+            "你的独立性.理性思维主导着你的生活,你做事一丝不苟,对自己的价值观十分忠诚。你很看中自己的事业,对自己未来的发展有着坚定的追求。工作中你拒绝让主观情绪影响自己的决策,可能会让一些人认为是铁石心肠。但在团队中,你是一个能作出普通人无法判断的决定.主持大局的领导型创业人才。"
         },
         {
           id: 3,
@@ -411,7 +411,7 @@ export default {
           img: "http://newmedia.yokelly.com.cn/src/dolphin.jpg",
           type: "E-外向 N-直觉  F-情感  P-知觉",
           content:
-            "你是一个饱含热情、极富想象的人。比常人更具有创造力和感染力,拥有无限的能量,极其渴望学习新事物和结识新朋友。你们常常能给身边的人带来快乐并敏锐的意识到他们的需求,人缘极好,是一个创新能力和变通能力极强的启发型创业人才。"
+            "你是一个饱含热情.极富想象的人。比常人更具有创造力和感染力,拥有无限的能量,极其渴望学习新事物和结识新朋友。你们常常能给身边的人带来快乐并敏锐的意识到他们的需求,人缘极好,是一个创新能力和变通能力极强的启发型创业人才。"
         },
         {
           id: 4,
@@ -421,7 +421,7 @@ export default {
           img: "http://newmedia.yokelly.com.cn/src/cat.jpg",
           type: "I-内向 S-感觉 T-思维 P-知觉",
           content:
-            "你天生安静、擅长分析,对设计、开发这样的技术领域富有很高的热情,总喜欢搞清楚事情的来龙去脉。你是个很冷静的观察者,灵活度和反应力极高,对常规和戒律不屑一顾,对不熟的人来说,你高冷有距离感,但对于朋友,你是个有趣、值得深交的人。你是一个逻辑性清晰、重视效率的实干型创业人才。"
+            "你天生安静.擅长分析,对设计.开发这样的技术领域富有很高的热情,总喜欢搞清楚事情的来龙去脉。你是个很冷静的观察者,灵活度和反应力极高,对常规和戒律不屑一顾,对不熟的人来说,你高冷有距离感,但对于朋友,你是个有趣.值得深交的人。你是一个逻辑性清晰.重视效率的实干型创业人才。"
         },
         {
           en: "DEER",
@@ -431,7 +431,7 @@ export default {
           img: "http://newmedia.yokelly.com.cn/src/deer.jpg",
           type: "I-内向 S-感觉 F-情感  J-判断",
           content:
-            "你是一个体贴、安静并值得信任的人。你能在每一个人身上看到潜力,也非常乐于帮助别人把他的能力发挥到极致。你总是在推动个人发展和团队成长。在生活中,你对赞美和批评比较敏感,有些情绪化,但却能让人感觉到亲切,并给予信赖。是一个很有感染力、善于激发别人的赠与型创业人才。"
+            "你是一个体贴.安静并值得信任的人。你能在每一个人身上看到潜力,也非常乐于帮助别人把他的能力发挥到极致。你总是在推动个人发展和团队成长。在生活中,你对赞美和批评比较敏感,有些情绪化,但却能让人感觉到亲切,并给予信赖。是一个很有感染力.善于激发别人的赠与型创业人才。"
         },
         {
           en: "SLOTH",
@@ -441,7 +441,7 @@ export default {
           img: "http://newmedia.yokelly.com.cn/src/sloth.jpg",
           type: "I-内向 S-感觉 F-情感  P-知觉",
           content:
-            "当他人和你待在一起时,总会感觉放松而静谧。你生活随性、洒脱,喜欢按照自己的节奏生活,随时随地享受生活。你体贴、关心身边的朋友,你们认为价值观对自己很重要,但又不是那种会为了价值观去奋力一拼的人。是一个一丝不苟、有条不紊的思考型创业人才。"
+            "当他人和你待在一起时,总会感觉放松而静谧。你生活随性.洒脱,喜欢按照自己的节奏生活,随时随地享受生活。你体贴.关心身边的朋友,你们认为价值观对自己很重要,但又不是那种会为了价值观去奋力一拼的人。是一个一丝不苟.有条不紊的思考型创业人才。"
         }
       ],
       userInfo: {
@@ -640,7 +640,7 @@ export default {
             _self.$wechat.ready(function() {
               _self.$wechat.showOptionMenu();
               _self.$wechat.onMenuShareTimeline({
-                title: "创业测试", // 分享标题
+                title: "测测你的动物型创业人格", // 分享标题
                 link: "http://newmedia.yokelly.com.cn/career", // 分享链接,该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                 imgUrl: "http://newmedia.yokelly.com.cn/src/catIcon.jpg", // 分享图标
                 success: function() {
@@ -650,10 +650,10 @@ export default {
               });
               _self.$wechat.onMenuShareAppMessage({
                 title: "创业测试", // 分享标题
-                desc: "在创业时代,哪种动物昭示着你的创业人格？", // 分享描述
+                desc: "在创业时代，哪种动物能代表你的创业人格？", // 分享描述
                 link: "http://newmedia.yokelly.com.cn/career", // 分享链接,该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                 imgUrl: "http://newmedia.yokelly.com.cn/src/catIcon.jpg", // 分享图标
-                type: "", // 分享类型,music、video或link,不填默认为link
+                type: "", // 分享类型,music.video或link,不填默认为link
                 dataUrl: "", // 如果type是music或video,则要提供数据链接,默认为空
                 success: function() {
                   // 用户点击了分享后执行的回调函数
@@ -950,13 +950,16 @@ export default {
             /*height: 9rem;*/
             width: 100%;
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             .lineBox {
               border-bottom: solid 1px #999;
               width: 100%;
               height: 3rem;
             }
             .outside {
-              width: 100%;
+              width: 14rem;
               /*position: absolute;*/
               /*top: 3rem;*/
               /*left: 0;*/
