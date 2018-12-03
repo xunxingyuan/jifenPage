@@ -4,23 +4,31 @@
     <div v-if="pageShow" class="coverBox">
       <div class="introduce" v-if="showHome">
         <div class="contain">
-          <span class="leftTop icon circle"></span>
-          <span class="rightTop icon circle"></span>
-          <span class="leftBot icon circle"></span>
-          <span class="rightBot icon block"></span>
+          <!--<span class="leftTop icon circle"></span>-->
+          <!--<span class="rightTop icon circle"></span>-->
+          <!--<span class="leftBot icon circle"></span>-->
+          <!--<span class="rightBot icon block"></span>-->
           <div class="introImg"></div>
           <div class="introText">
             <p>不同的性格和偏好伴随着生活经历</p>
             <p>会成就每个人不同的事业结果</p>
             <p>在创业时代,哪种动物昭示着你的创业人格？</p>
           </div>
-          <div class="btnBox">
-            <button @click="beginTest" class="enter">开始测试</button>
-            <div class="enterInner"></div>
+          <div class="btnBegin" @click="beginTest">
+
           </div>
+          <!--<div class="btnBox">-->
+            <!--<button @click="beginTest" class="enter">开始测试</button>-->
+            <!--<div class="enterInner"></div>-->
+          <!--</div>-->
         </div>
       </div>
       <div class="optionBox" v-if="showOption">
+        <div class="logoShow">
+          <div class="logo">
+
+          </div>
+        </div>
         <div class="optionShow">
           <!--<div class="optionTitle">-->
           <!--<span class="title" v-if="step===1">题目一</span>-->
@@ -58,6 +66,10 @@
               </div>
             </transition-group>
           </div>
+        </div>
+        <div class="btnBox">
+          <button @click="backUp" class="enter">返回上层</button>
+          <div class="enterInner"></div>
         </div>
       </div>
     </div>
@@ -97,7 +109,8 @@
       </div>
     </div>
     <div class="musicCtrl" :class="{'trans': musicPlay}" @click="ctrlMusic">
-      <img src="http://newmedia.yokelly.com.cn/src/musicIcon.png">
+      <div class="music"></div>
+      <div class="nomusic"></div>
     </div>
     <audio
       id="audio2"
@@ -117,16 +130,17 @@ export default {
   name: "",
   data() {
     return {
+      choseHistory:[],
       musicPlay: true,
       step: 1,
       pageShow: false,
       questionList: [
         {
           id: 1,
-          question: "难得假期,阳光正好,你会?",
+          question: "难得假期，阳光正好,你会？",
           options: [
             {
-              content: "待在家里静享时光,好好休息",
+              content: "待在家里静享时光，好好休息",
               jump: 2,
               resultId: ""
             },
@@ -139,15 +153,15 @@ export default {
         },
         {
           id: 2,
-          question: "在家里睡到自然醒,时间富余,你会?",
+          question: "在家里睡到自然醒，时间富余,你会？",
           options: [
             {
-              content: "找点事情来充实自己,绘画.插花或为自己做个健康早餐",
+              content: "找点事情来充实自己，绘画，插花或为自己做个健康早餐",
               jump: 4,
               resultId: ""
             },
             {
-              content: "点个外卖,躺在床上玩玩手机翻翻朋友圈",
+              content: "点个外卖，躺在床上玩玩手机翻翻朋友圈",
               jump: 6,
               resultId: ""
             }
@@ -155,15 +169,15 @@ export default {
         },
         {
           id: 3,
-          question: "你打电话给约最好的朋友一起去玩,但她有点事走不开,你会?",
+          question: "你打电话给约最好的朋友一起去玩，但她有点事走不开,你会？",
           options: [
             {
-              content: "约定好在她处理好事情后,陪你去玩",
+              content: "约定好在她处理好事情后，陪你去玩",
               jump: 5,
               resultId: ""
             },
             {
-              content: "十分理解,约其他的朋友,陪你去玩",
+              content: "十分理解,约其他的朋友，陪你去玩",
               jump: 7,
               resultId: ""
             }
@@ -171,15 +185,15 @@ export default {
         },
         {
           id: 4,
-          question: "你在家里做着手头的事情,一个朋友突然发信息约你见面,你会?",
+          question: "你在家里做着手头的事情，一个朋友突然发信息约你见面,你会？",
           options: [
             {
-              content: "自己的时间已安排充实,下次再约",
+              content: "自己的时间已安排充实，下次再约",
               jump: 8,
               resultId: ""
             },
             {
-              content: "来者是客,热情招待",
+              content: "来者是客，热情招待",
               jump: 10,
               resultId: ""
             }
@@ -187,10 +201,10 @@ export default {
         },
         {
           id: 5,
-          question: "终于和朋友一起到了酒吧,服务员向你推荐新品,你会?",
+          question: "终于和朋友一起到了酒吧，服务员向你推荐新品,你会？",
           options: [
             {
-              content: "尝试一下,有何不可",
+              content: "尝试一下，有何不可",
               jump: 9,
               resultId: ""
             },
@@ -203,15 +217,15 @@ export default {
         },
         {
           id: 6,
-          question: "你在家里做着手头的事情,一个朋友突然发信息约你见面,你会?",
+          question: "你在家里做着手头的事情，一个朋友突然发信息约你见面,你会？",
           options: [
             {
-              content: "自己的时间已安排充实,下次再约",
+              content: "自己的时间已安排充实，下次再约",
               jump: 8,
               resultId: ""
             },
             {
-              content: "来者是客,热情招待",
+              content: "来者是客，热情招待",
               jump: 10,
               resultId: ""
             }
@@ -219,10 +233,10 @@ export default {
         },
         {
           id: 7,
-          question: "终于和朋友一起到了酒吧,服务员向你推荐新品,你会?",
+          question: "终于和朋友一起到了酒吧，服务员向你推荐新品,你会？",
           options: [
             {
-              content: "尝试一下,有何不可",
+              content: "尝试一下，有何不可",
               jump: 9,
               resultId: ""
             },
@@ -235,10 +249,10 @@ export default {
         },
         {
           id: 8,
-          question: "你是怎么看待自己独处的私人时光?",
+          question: "你是怎么看待自己独处的私人时光？",
           options: [
             {
-              content: "一个人的状态更自由,无拘无束",
+              content: "一个人的状态更自由，无拘无束",
               jump: 12,
               resultId: ""
             },
@@ -251,20 +265,20 @@ export default {
         },
         {
           id: 9,
-          question: "你和你的朋友在酒吧中玩的正嗨,突然有一群异性前来搭讪,你会?",
+          question: "你和你的朋友在酒吧中玩的正嗨，突然有一群异性前来搭讪,你会？",
           options: [
             {
-              content: "仔细观察他们的行为谈吐,判断是否可交",
+              content: "仔细观察他们的行为谈吐，判断是否可交",
               jump: 0,
               resultId: 2
             },
             {
-              content: "客气交谈,但会保持距离",
+              content: "客气交谈，但会保持距离",
               jump: 0,
               resultId: 1
             },
             {
-              content: "出来玩,就应该开开心心的交朋友",
+              content: "出来玩，就应该开开心心的交朋友",
               jump: 0,
               resultId: 3
             }
@@ -272,10 +286,10 @@ export default {
         },
         {
           id: 10,
-          question: "招待完朋友,天色已晚,你会?",
+          question: "招待完朋友，天色已晚，你会？",
           options: [
             {
-              content: "天黑之后,就想回家",
+              content: "天黑之后，就想回家",
               jump: 12,
               resultId: ""
             },
@@ -288,20 +302,20 @@ export default {
         },
         {
           id: 11,
-          question: "你和你的朋友在酒吧中玩的正嗨,突然有一群异性前来搭讪,你会?",
+          question: "你和你的朋友在酒吧中玩的正嗨，突然有一群异性前来搭讪，你会？",
           options: [
             {
-              content: "仔细观察他们的行为谈吐,判断是否可交",
+              content: "仔细观察他们的行为谈吐，判断是否可交",
               jump: 0,
               resultId: 2
             },
             {
-              content: "客气交谈,但会保持距离",
+              content: "客气交谈，但会保持距离",
               jump: 0,
               resultId: 1
             },
             {
-              content: "出来玩,就应该开开心心的交朋友",
+              content: "出来玩，就应该开开心心的交朋友",
               jump: 0,
               resultId: 3
             }
@@ -309,7 +323,7 @@ export default {
         },
         {
           id: 12,
-          question: "你一个人坐在家里看电视,窗外突然“砰”的发出一声巨响,你会?",
+          question: "你一个人坐在家里看电视，窗外突然“砰”的发出一声巨响,你会？",
           options: [
             {
               content: "跑出去看看",
@@ -330,7 +344,7 @@ export default {
         },
         {
           id: 13,
-          question: "你一个人坐在家里看电视,窗外突然“砰”的发出一声巨响,你会?",
+          question: "你一个人坐在家里看电视，窗外突然“砰”的发出一声巨响,你会？",
           options: [
             {
               content: "跑出去看看",
@@ -352,10 +366,10 @@ export default {
       ],
       selectOption: {
         id: 1,
-        question: "难得假期,阳光正好,你会?",
+        question: "难得假期，阳光正好，你会？",
         options: [
           {
-            content: "待在家里静享时光,好好休息",
+            content: "待在家里静享时光，好好休息",
             jump: 2,
             resultId: ""
           },
@@ -379,7 +393,7 @@ export default {
         desc: "让当下的事情有条不紊的进行",
         img: "http://newmedia.yokelly.com.cn/src/fox.jpg",
         content:
-          "你是一个引人注目.充满魅力和影响力的人,一直在寻找生活中最好的事物,并希望与朋友分享。你活跃.有趣,对生活饱含热情,社交能力极强,知道如何适应环境,从而影响他人,是一个善于调动人力和部署项目的管理型创业人才。"
+          "你是一个引人注目、充满魅力和影响力的人，一直在寻找生活中最好的事物，并希望与朋友分享。你活跃、有趣，对生活饱含热情，社交能力极强，知道如何适应环境，从而影响他人，是一个善于调动人力和部署项目的管理型创业人才。"
       },
       bindCss: "",
       resultList: [
@@ -391,7 +405,7 @@ export default {
           desc: "让当下的事情有条不紊的进行",
           img: "http://newmedia.yokelly.com.cn/src/fox.jpg",
           content:
-            "你是一个引人注目.充满魅力和影响力的人,一直在寻找生活中最好的事物,并希望与朋友分享。你活跃.有趣,对生活饱含热情,社交能力极强,知道如何适应环境,从而影响他人,是一个善于调动人力和部署项目的管理型创业人才。"
+            "你是一个引人注目、充满魅力和影响力的人，一直在寻找生活中最好的事物，并希望与朋友分享。你活跃、有趣，对生活饱含热情，社交能力极强，知道如何适应环境，从而影响他人，是一个善于调动人力和部署项目的管理型创业人才。"
         },
         {
           id: 2,
@@ -401,7 +415,7 @@ export default {
           img: "http://newmedia.yokelly.com.cn/src/lion.jpg",
           type: "E-外向 N-直觉 T-思维 J-判断",
           content:
-            "你的独立性.理性思维主导着你的生活,你做事一丝不苟,对自己的价值观十分忠诚。你很看中自己的事业,对自己未来的发展有着坚定的追求。工作中你拒绝让主观情绪影响自己的决策,可能会让一些人认为是铁石心肠。但在团队中,你是一个能作出普通人无法判断的决定.主持大局的领导型创业人才。"
+            "你的独立性、理性思维主导着你的生活，你做事一丝不苟，对自己的价值观十分忠诚。你很看中自己的事业，对自己未来的发展有着坚定的追求。工作中你拒绝让主观情绪影响自己的决策，可能会让一些人认为是铁石心肠。但在团队中，你是一个能作出普通人无法判断的决定、主持大局的领导型创业人才。"
         },
         {
           id: 3,
@@ -411,7 +425,7 @@ export default {
           img: "http://newmedia.yokelly.com.cn/src/dolphin.jpg",
           type: "E-外向 N-直觉  F-情感  P-知觉",
           content:
-            "你是一个饱含热情.极富想象的人。比常人更具有创造力和感染力,拥有无限的能量,极其渴望学习新事物和结识新朋友。你们常常能给身边的人带来快乐并敏锐的意识到他们的需求,人缘极好,是一个创新能力和变通能力极强的启发型创业人才。"
+            "你是一个饱含热情、极富想象的人。比常人更具有创造力和感染力，拥有无限的能量，极其渴望学习新事物和结识新朋友。你们常常能给身边的人带来快乐并敏锐的意识到他们的需求，人缘极好，是一个创新能力和变通能力极强的启发型创业人才。"
         },
         {
           id: 4,
@@ -421,7 +435,7 @@ export default {
           img: "http://newmedia.yokelly.com.cn/src/cat.jpg",
           type: "I-内向 S-感觉 T-思维 P-知觉",
           content:
-            "你天生安静.擅长分析,对设计.开发这样的技术领域富有很高的热情,总喜欢搞清楚事情的来龙去脉。你是个很冷静的观察者,灵活度和反应力极高,对常规和戒律不屑一顾,对不熟的人来说,你高冷有距离感,但对于朋友,你是个有趣.值得深交的人。你是一个逻辑性清晰.重视效率的实干型创业人才。"
+            "你天生安静、擅长分析，对设计、开发这样的技术领域富有很高的热情，总喜欢搞清楚事情的来龙去脉。你是个很冷静的观察者，灵活度和反应力极高，对常规和戒律不屑一顾，对不熟的人来说，你高冷有距离感，但对于朋友，你是个有趣、值得深交的人。你是一个逻辑性清晰、重视效率的实干型创业人才。"
         },
         {
           en: "DEER",
@@ -431,7 +445,7 @@ export default {
           img: "http://newmedia.yokelly.com.cn/src/deer.jpg",
           type: "I-内向 S-感觉 F-情感  J-判断",
           content:
-            "你是一个体贴.安静并值得信任的人。你能在每一个人身上看到潜力,也非常乐于帮助别人把他的能力发挥到极致。你总是在推动个人发展和团队成长。在生活中,你对赞美和批评比较敏感,有些情绪化,但却能让人感觉到亲切,并给予信赖。是一个很有感染力.善于激发别人的赠与型创业人才。"
+            "你是一个体贴、安静并值得信任的人。你能在每一个人身上看到潜力，也非常乐于帮助别人把他的能力发挥到极致。你总是在推动个人发展和团队成长。在生活中，你对赞美和批评比较敏感，有些情绪化，但却能让人感觉到亲切，并给予信赖。是一个很有感染力、善于激发别人的赠与型创业人才。"
         },
         {
           en: "SLOTH",
@@ -441,7 +455,7 @@ export default {
           img: "http://newmedia.yokelly.com.cn/src/sloth.jpg",
           type: "I-内向 S-感觉 F-情感  P-知觉",
           content:
-            "当他人和你待在一起时,总会感觉放松而静谧。你生活随性.洒脱,喜欢按照自己的节奏生活,随时随地享受生活。你体贴.关心身边的朋友,你们认为价值观对自己很重要,但又不是那种会为了价值观去奋力一拼的人。是一个一丝不苟.有条不紊的思考型创业人才。"
+            "当他人和你待在一起时，总会感觉放松而静谧。你生活随性、洒脱，喜欢按照自己的节奏生活，随时随地享受生活。你体贴、关心身边的朋友，你们认为价值观对自己很重要，但又不是那种会为了价值观去奋力一拼的人。是一个一丝不苟、有条不紊的思考型创业人才。"
         }
       ],
       userInfo: {
@@ -544,7 +558,7 @@ export default {
             img: "http://newmedia.yokelly.com.cn/src/bottom.png"
           },
           {
-            img: "http://newmedia.yokelly.com.cn/src/bg3.jpg"
+            img: "http://newmedia.yokelly.com.cn/src/bg4.jpg"
           },
           {
             img: "http://newmedia.yokelly.com.cn/src/box.png"
@@ -566,10 +580,12 @@ export default {
         });
       } else {
         this.step += 1;
+
         this.showOptionData = false;
         this.showOption = false;
         this.questionList.forEach(element => {
           if (element.id === item.jump) {
+            this.choseHistory.push(this.selectOption.id)
             this.selectOption = element;
             this.showOption = true;
             setTimeout(() => {
@@ -579,6 +595,30 @@ export default {
         });
       }
     },
+    //返回上一页
+    backUp: function () {
+      let len = this.choseHistory.length
+      if(this.choseHistory.length === 0){
+        this.showOptionData = false;
+        this.showOption = false;
+        this.showHome = true
+      }else{
+        this.step -= 1;
+        this.showOptionData = false;
+        this.showOption = false;
+        this.questionList.forEach(element => {
+          if (element.id === this.choseHistory[len-1]) {
+            this.selectOption = element;
+            this.showOption = true;
+            setTimeout(() => {
+              this.showOptionData = true;
+            }, 500);
+            this.choseHistory.splice(len-1,1)
+          }
+        });
+      }
+    },
+
     //页面进入计数
     countEnter: function(id) {
       this.$api.common.countEnter({
@@ -695,6 +735,12 @@ export default {
                 },
                 {
                   img: "http://newmedia.yokelly.com.cn/src/option.png"
+                },
+                {
+                  img: 'http://newmedia.yokelly.com.cn/src/begin.png'
+                },
+                {
+                  img: 'http://newmedia.yokelly.com.cn/src/logo.png'
                 }
               ];
               this.checkImg(list).then(() => {
@@ -749,6 +795,39 @@ export default {
   width: 100%;
   overflow: auto;
   background: #f8c2c2;
+  .btnBox {
+    position: relative;
+    width: 180px;
+    height: 36px;
+    margin-bottom: 2rem;
+    .enter {
+      width: 180px;
+      border: solid 1px #303133;
+      height: 36px;
+      background: #fff;
+      border-radius: 0.5rem;
+      line-height: 36px;
+      text-align: center;
+      outline: none;
+      font-size: 20px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 2;
+    }
+    .enterInner {
+      width: 180px;
+      border: solid 1px #303133;
+      height: 36px;
+      border-radius: 0.5rem;
+      position: absolute;
+      left: 5px;
+      top: 5px;
+      z-index: 1;
+      background: #F8C2C2;
+    }
+  }
+
   .audio2 {
     position: absolute;
     z-index: -2;
@@ -760,13 +839,21 @@ export default {
     top: 1rem;
     width: 32px;
     height: 32px;
-    img {
+    .music{
       width: 32px;
       height: 32px;
+      background: url("http://newmedia.yokelly.com.cn/src/nomusic.png");
+      background-size: 100% 100%;
     }
   }
   .trans {
     animation: 3s rotate infinite linear; //linear 匀速运动
+    .music{
+      width: 32px;
+      height: 32px;
+      background: url("http://newmedia.yokelly.com.cn/src/music.png");
+      background-size: 100% 100%;
+    }
   }
   @keyframes rotate {
     0% {
@@ -795,25 +882,25 @@ export default {
       background-size: 100% 100%;
       display: flex;
       flex-flow: column;
-      padding: 10%;
+      padding: 1.5rem;
       align-items: center;
       position: relative;
       .contain {
-        border: solid 1px #303133;
+        /*border: solid 2px #030303;*/
         width: 100%;
         height: 100%;
-        border-radius: 20px;
+        /*border-radius: 20px;*/
         display: flex;
         flex-flow: column;
         align-items: center;
         justify-content: space-between;
         position: relative;
         .introImg {
-          width: 280px;
-          height: 168px;
+          width: 350px;
+          height: 210px;
           background: url("http://newmedia.yokelly.com.cn/src/page1.png");
           background-size: 100% 100%;
-          margin-top: 1rem;
+          /*margin-top: 1rem;*/
         }
         .leftTop {
           left: 0.8rem;
@@ -828,24 +915,26 @@ export default {
           bottom: 0.8rem;
         }
         .rightBot {
-          right: 0;
-          bottom: 0;
+          right: -3px;
+          bottom: -2px;
         }
         .block {
           width: 2rem;
           height: 2rem;
-          border-top: solid 1px #303133;
-          border-left: solid 1px #303133;
-          overflow: hidden;
-          position: relative;
-        }
-        .block::before {
-          content: "";
-          width: 4rem;
-          height: 1px;
-          background: #303133;
           position: absolute;
-          top: 0.46rem;
+          border-top: solid 2px #030303;
+          border-left: solid 2px #030303;
+          border-right: solid 4px #FF7C8A;
+          border-bottom: solid 4px #FF7C8A;
+          /*overflow: hidden;*/
+        }
+        .block::after {
+          content: "";
+          width: 2.77rem;
+          height: 2px;
+          background: #030303;
+          position: absolute;
+          top: 0.8rem;
           left: -0.6rem;
           transform: rotate(-45deg);
         }
@@ -856,40 +945,8 @@ export default {
           width: 8px;
           height: 8px;
           background: #fff;
-          border: solid 1px #303133;
+          border: solid 2px #030303;
           border-radius: 4px;
-        }
-        .btnBox {
-          position: relative;
-          width: 180px;
-          height: 36px;
-          margin-bottom: 2rem;
-          .enter {
-            width: 180px;
-            border: solid 1px #303133;
-            height: 36px;
-            background: #fff;
-            border-radius: 0.5rem;
-            line-height: 36px;
-            text-align: center;
-            outline: none;
-            font-size: 20px;
-            position: absolute;
-            left: 0;
-            top: 0;
-            z-index: 2;
-          }
-          .enterInner {
-            width: 180px;
-            border: solid 1px #303133;
-            height: 36px;
-            border-radius: 0.5rem;
-            position: absolute;
-            left: 5px;
-            top: 5px;
-            z-index: 1;
-            background: #fff;
-          }
         }
         .introText {
           position: absolute;
@@ -901,20 +958,38 @@ export default {
           width: 100%;
         }
       }
+      .btnBegin{
+        width: 100vw;
+        height: 30vw;
+        background: url("http://newmedia.yokelly.com.cn/src/begin.png");
+        background-size: 100% 100%;
+      }
     }
     .optionBox {
       width: 100%;
       height: 100%;
-      background: url("http://newmedia.yokelly.com.cn/src/bg2.jpg");
+      background: url("http://newmedia.yokelly.com.cn/src/bg3.jpg");
       background-size: 100% 100%;
       display: flex;
       flex-flow: column;
       align-items: center;
-      justify-content: flex-end;
+      justify-content: center;
       padding-bottom: 2rem;
+      .btnBox{
+        margin: 0;
+        margin-top: -18px;
+      }
+      .logoShow{
+        width: 100vw;
+        height: 20vw;
+        min-height: 20vw;
+        margin-bottom: -7vw;
+        background: url("http://newmedia.yokelly.com.cn/src/logo.png");
+        background-size: 100% 100%;
+      }
       .optionShow {
-        width: 90vw;
-        height: 132.52vw;
+        width: 100vw;
+        height: 140vw;
         background: url("http://newmedia.yokelly.com.cn/src/chose.png");
         background-size: 100% 100%;
         position: relative;
@@ -945,7 +1020,7 @@ export default {
           display: flex;
           align-items: center;
           justify-content: center;
-          padding-top: 1rem;
+          padding-top: 3rem;
           .questionBox {
             /*height: 9rem;*/
             width: 100%;
@@ -988,17 +1063,18 @@ export default {
           align-items: center;
           justify-content: center;
           position: relative;
+          padding-bottom: 2rem;
           .choseItem {
             margin: -0.5rem 0;
-            width: 285px;
-            height: 85.5px;
+            width: 100vw;
+            height: 20vw;
             background: url("http://newmedia.yokelly.com.cn/src/option.png");
             background-size: 100% 100%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 14px;
-            padding: 0 2rem;
+            padding: 0 20%;
             p {
               text-align: left;
               line-height: 1.2;
@@ -1017,7 +1093,7 @@ export default {
     top: 0;
     z-index: -1;
     /*padding: 1rem;*/
-    background: url("http://newmedia.yokelly.com.cn/src/bg3.jpg");
+    background: url("http://newmedia.yokelly.com.cn/src/bg4.jpg");
     background-size: 100% 100%;
     display: flex;
     flex-flow: column;
@@ -1028,8 +1104,8 @@ export default {
       align-items: center;
       justify-content: space-between;
       .titleImg {
-        width: 220px;
-        margin-right: -50px;
+        width: 280px;
+        margin-right: -40px;
       }
       .topLeft {
         text-align: center;
@@ -1037,6 +1113,7 @@ export default {
         flex-flow: column;
         align-items: center;
         justify-content: center;
+        margin-right: -40px;
         .userIcon {
           margin-top: 10px;
           margin-bottom: 10px;
@@ -1072,7 +1149,7 @@ export default {
       margin-bottom: -1.5rem;
       position: relative;
       margin-top: -1rem;
-      padding: 8% 11%;
+      padding: 8% 9%;
       .topInner {
         width: 100%;
         height: 53%;
@@ -1124,14 +1201,14 @@ export default {
       }
       .midInner {
         font-size: 12px;
-        padding: 10px;
+        padding: 8px;
         line-height: 1.4;
         color: #666;
         height: 47%;
         display: flex;
         align-items: center;
         justify-content: center;
-        word-break: break-all;
+        /*word-break: break-all;*/
       }
     }
     .botPart {
