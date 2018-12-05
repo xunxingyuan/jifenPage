@@ -14,20 +14,16 @@
             <p>会成就每个人不同的事业结果</p>
             <p>在创业时代,哪种动物昭示着你的创业人格？</p>
           </div>
-          <div class="btnBegin" @click="beginTest">
-
-          </div>
+          <div class="btnBegin" @click="beginTest"></div>
           <!--<div class="btnBox">-->
-            <!--<button @click="beginTest" class="enter">开始测试</button>-->
-            <!--<div class="enterInner"></div>-->
+          <!--<button @click="beginTest" class="enter">开始测试</button>-->
+          <!--<div class="enterInner"></div>-->
           <!--</div>-->
         </div>
       </div>
       <div class="optionBox" v-if="showOption">
         <div class="logoShow">
-          <div class="logo">
-
-          </div>
+          <div class="logo"></div>
         </div>
         <div class="optionShow">
           <!--<div class="optionTitle">-->
@@ -47,7 +43,6 @@
               <p class="outside">{{step}}.{{selectOption.question}}</p>
             </div>
           </div>
-
           <div class="chose">
             <transition-group name="slide-fade">
               <div
@@ -87,22 +82,25 @@
         <img class="titleImg" src="http://newmedia.yokelly.com.cn/src/title.png">
       </div>
       <div class="midPart">
-        <div class="topInner">
-          <div class="pic">
-            <img :src="showResult.img">
-          </div>
-          <div class="intro">
-            <div class="introTitle">
-              <p>{{showResult.name}}</p>
-              <span>{{showResult.en}}</span>
+        <div class="showOuter">
+          <div class="topInner">
+            <div class="pic">
+              <img :src="showResult.img">
             </div>
-            <div class="introBot">
-              <p class="introDesc">{{showResult.desc}}</p>
-              <p>{{showResult.type}}</p>
+            <div class="intro">
+              <div class="introTitle">
+                <p>{{showResult.name}}</p>
+                <span>{{showResult.en}}</span>
+              </div>
+              <div class="introBot">
+                <p class="introDesc">{{showResult.desc}}</p>
+                <p>{{showResult.type}}</p>
+              </div>
             </div>
           </div>
+          <div class="midInner">{{showResult.content}}</div>
         </div>
-        <div class="midInner">{{showResult.content}}</div>
+        <img class="showImg" src="http://newmedia.yokelly.com.cn/src/box.png">
       </div>
       <div class="botPart">
         <img src="http://newmedia.yokelly.com.cn/src/bottom.png">
@@ -130,7 +128,7 @@ export default {
   name: "",
   data() {
     return {
-      choseHistory:[],
+      choseHistory: [],
       musicPlay: true,
       step: 1,
       pageShow: false,
@@ -265,7 +263,8 @@ export default {
         },
         {
           id: 9,
-          question: "你和你的朋友在酒吧中玩的正嗨，突然有一群异性前来搭讪,你会？",
+          question:
+            "你和你的朋友在酒吧中玩的正嗨，突然有一群异性前来搭讪,你会？",
           options: [
             {
               content: "仔细观察他们的行为谈吐，判断是否可交",
@@ -302,7 +301,8 @@ export default {
         },
         {
           id: 11,
-          question: "你和你的朋友在酒吧中玩的正嗨，突然有一群异性前来搭讪，你会？",
+          question:
+            "你和你的朋友在酒吧中玩的正嗨，突然有一群异性前来搭讪，你会？",
           options: [
             {
               content: "仔细观察他们的行为谈吐，判断是否可交",
@@ -521,17 +521,26 @@ export default {
       let picDom = document.querySelector(".showBox");
       let width = picDom.offsetWidth;
       let height = picDom.offsetHeight;
-      let scaleBy = 3; //缩放比例
+      // let canvas = document.createElement("canvas");
+      // canvas.width = width * 2;
+      // canvas.height = height * 2;
+      // canvas.style.width = width * 2 + "px";
+      // canvas.style.height = height * 2 + "px";
+      // let context = canvas.getContext("2d");
+      // context.scale(2, 2);
+      let scaleBy = 4; //缩放比例
       let opts = {
-        //            canvas:canvas,
+        // canvas: canvas,
         logging: false, //日志开关
         width: width,
         height: height,
         scale: scaleBy,
-        allowTaint: true
+        allowTaint: true,
+        windowWidth: width,
+        windowHeight: height
       };
-      html2canvas(picDom, opts).then(canvas => {
-        _self.captureData = canvas.toDataURL();
+      html2canvas(picDom, opts).then(data => {
+        _self.captureData = data.toDataURL();
         _self.captureShow = true;
         this.$vux.loading.hide();
       });
@@ -564,7 +573,6 @@ export default {
             img: "http://newmedia.yokelly.com.cn/src/box.png"
           }
         ];
-
         this.showOptionData = true;
         this.showOption = true;
         this.resultList.forEach(e => {
@@ -580,12 +588,11 @@ export default {
         });
       } else {
         this.step += 1;
-
         this.showOptionData = false;
         this.showOption = false;
         this.questionList.forEach(element => {
           if (element.id === item.jump) {
-            this.choseHistory.push(this.selectOption.id)
+            this.choseHistory.push(this.selectOption.id);
             this.selectOption = element;
             this.showOption = true;
             setTimeout(() => {
@@ -596,29 +603,28 @@ export default {
       }
     },
     //返回上一页
-    backUp: function () {
-      let len = this.choseHistory.length
-      if(this.choseHistory.length === 0){
+    backUp: function() {
+      let len = this.choseHistory.length;
+      if (this.choseHistory.length === 0) {
         this.showOptionData = false;
         this.showOption = false;
-        this.showHome = true
-      }else{
+        this.showHome = true;
+      } else {
         this.step -= 1;
         this.showOptionData = false;
         this.showOption = false;
         this.questionList.forEach(element => {
-          if (element.id === this.choseHistory[len-1]) {
+          if (element.id === this.choseHistory[len - 1]) {
             this.selectOption = element;
             this.showOption = true;
             setTimeout(() => {
               this.showOptionData = true;
             }, 500);
-            this.choseHistory.splice(len-1,1)
+            this.choseHistory.splice(len - 1, 1);
           }
         });
       }
     },
-
     //页面进入计数
     countEnter: function(id) {
       this.$api.common.countEnter({
@@ -659,7 +665,6 @@ export default {
         };
       });
     },
-
     //js分享初始化
     jsShareInit: function() {
       let _self = this;
@@ -704,7 +709,6 @@ export default {
           }
         });
     },
-
     checkUser: function() {
       let _self = this;
       let id = window.localStorage.getItem("userIdCareer");
@@ -737,10 +741,10 @@ export default {
                   img: "http://newmedia.yokelly.com.cn/src/option.png"
                 },
                 {
-                  img: 'http://newmedia.yokelly.com.cn/src/begin.png'
+                  img: "http://newmedia.yokelly.com.cn/src/begin.png"
                 },
                 {
-                  img: 'http://newmedia.yokelly.com.cn/src/logo.png'
+                  img: "http://newmedia.yokelly.com.cn/src/logo.png"
                 }
               ];
               this.checkImg(list).then(() => {
@@ -824,10 +828,9 @@ export default {
       left: 5px;
       top: 5px;
       z-index: 1;
-      background: #F8C2C2;
+      background: #f8c2c2;
     }
   }
-
   .audio2 {
     position: absolute;
     z-index: -2;
@@ -839,7 +842,7 @@ export default {
     top: 1rem;
     width: 32px;
     height: 32px;
-    .music{
+    .music {
       width: 32px;
       height: 32px;
       background: url("http://newmedia.yokelly.com.cn/src/nomusic.png");
@@ -848,7 +851,7 @@ export default {
   }
   .trans {
     animation: 3s rotate infinite linear; //linear 匀速运动
-    .music{
+    .music {
       width: 32px;
       height: 32px;
       background: url("http://newmedia.yokelly.com.cn/src/music.png");
@@ -924,8 +927,8 @@ export default {
           position: absolute;
           border-top: solid 2px #030303;
           border-left: solid 2px #030303;
-          border-right: solid 4px #FF7C8A;
-          border-bottom: solid 4px #FF7C8A;
+          border-right: solid 4px #ff7c8a;
+          border-bottom: solid 4px #ff7c8a;
           /*overflow: hidden;*/
         }
         .block::after {
@@ -958,7 +961,7 @@ export default {
           width: 100%;
         }
       }
-      .btnBegin{
+      .btnBegin {
         width: 100vw;
         height: 30vw;
         background: url("http://newmedia.yokelly.com.cn/src/begin.png");
@@ -975,11 +978,11 @@ export default {
       align-items: center;
       justify-content: center;
       padding-bottom: 2rem;
-      .btnBox{
+      .btnBox {
         margin: 0;
         margin-top: -18px;
       }
-      .logoShow{
+      .logoShow {
         width: 100vw;
         height: 20vw;
         min-height: 20vw;
@@ -1143,72 +1146,90 @@ export default {
     }
     .midPart {
       width: 100vw;
-      height: 100vw;
-      background: url("http://newmedia.yokelly.com.cn/src/box.png");
-      background-size: 100% 100%;
+      height: 100vw; // background: url("http://newmedia.yokelly.com.cn/src/box.png");
+      // background-size: 100% 100%;
       margin-bottom: -1.5rem;
       position: relative;
       margin-top: -1rem;
       padding: 8% 9%;
-      .topInner {
+      .showOuter {
         width: 100%;
-        height: 53%;
-        display: flex;
-        .pic {
-          width: 38%;
-          padding: 10px;
-          padding-top: 9%;
-          position: relative;
-          img {
-            width: 100%;
-            height: auto;
+        height: 100%;
+        position: absolute;
+        padding: 8% 9%;
+        left: 0;
+        top: 0;
+        z-index: 2;
+        .topInner {
+          width: 100%;
+          height: 53%;
+          display: flex;
+          z-index: 2;
+          padding-top: 5%;
+          .pic {
+            width: 38%;
+            padding: 10px;
+            position: relative;
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+          .intro {
+            width: 62%;
+            height: 100%;
+            .introTitle {
+              height: 62%;
+              display: flex;
+              flex-flow: column;
+              align-items: center;
+              justify-content: center;
+              // padding-top: 10%;
+              p {
+                font-size: 32px;
+                font-weight: 600;
+              }
+              span {
+                font-size: 14px;
+                color: #666;
+              }
+            }
+            .introBot {
+              height: 38%;
+              display: flex;
+              align-items: center;
+              flex-flow: column;
+              justify-content: center;
+              font-size: 12px;
+              color: #666;
+              .introDesc {
+                color: #000;
+                font-weight: 600;
+                font-size: 14px;
+              }
+            }
           }
         }
-        .intro {
-          width: 62%;
-          height: 100%;
-          .introTitle {
-            height: 68%;
-            display: flex;
-            flex-flow: column;
-            align-items: center;
-            justify-content: center;
-            padding-top: 10%;
-            p {
-              font-size: 32px;
-              font-weight: 600;
-            }
-            span {
-              font-size: 14px;
-              color: #666;
-            }
-          }
-          .introBot {
-            height: 32%;
-            display: flex;
-            align-items: center;
-            flex-flow: column;
-            justify-content: center;
-            font-size: 12px;
-            color: #666;
-            .introDesc {
-              color: #000;
-              font-weight: 600;
-              font-size: 14px;
-            }
-          }
+        .midInner {
+          z-index: 2;
+          font-size: 12px;
+          padding: 12px;
+          line-height: 1.4;
+          color: #666;
+          height: 47%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          /*word-break: break-all;*/
         }
       }
-      .midInner {
-        font-size: 12px;
-        padding: 8px;
-        line-height: 1.4;
-        color: #666;
-        height: 47%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        /*word-break: break-all;*/
+      .showImg {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 1;
       }
     }
     .botPart {
