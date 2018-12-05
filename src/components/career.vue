@@ -689,7 +689,7 @@ export default {
                 }
               });
               _self.$wechat.onMenuShareAppMessage({
-                title: "创业测试", // 分享标题
+                title: "测测你的动物型创业人格", // 分享标题
                 desc: "在创业时代，哪种动物能代表你的创业人格？", // 分享描述
                 link: "http://newmedia.yokelly.com.cn/career", // 分享链接,该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                 imgUrl: "http://newmedia.yokelly.com.cn/src/catIcon.jpg", // 分享图标
