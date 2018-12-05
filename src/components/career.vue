@@ -40,7 +40,7 @@
               <!--<div class="lineBox"></div>-->
               <!--<div class="lineBox"></div>-->
               <!--<div class="lineBox"></div>-->
-              <p class="outside">{{step}}.{{selectOption.question}}</p>
+              <p class="outside">{{step}}、{{selectOption.question}}</p>
             </div>
           </div>
           <div class="chose">
@@ -1037,7 +1037,7 @@ export default {
               height: 3rem;
             }
             .outside {
-              width: 14rem;
+              width: 15rem;
               /*position: absolute;*/
               /*top: 3rem;*/
               /*left: 0;*/
@@ -1151,12 +1151,12 @@ export default {
       margin-bottom: -1.5rem;
       position: relative;
       margin-top: -1rem;
-      padding: 8% 9%;
+      padding: 7.2vw 9vw;
       .showOuter {
         width: 100%;
         height: 100%;
         position: absolute;
-        padding: 8% 9%;
+        padding: 7.2vw 9vw;
         left: 0;
         top: 0;
         z-index: 2;
