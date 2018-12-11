@@ -7,11 +7,11 @@ import router from './router/index'
 import axios from 'axios'
 import { WechatPlugin, ConfirmPlugin ,ToastPlugin ,LoadingPlugin} from 'vux'
 import api from './tools/api'
-
 import { Pagination, Select,Table,Input,Alert,Option,Button,TableColumn,MessageBox,Message } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import VueTouch from 'vue-touch'
 
-
+Vue.use(VueTouch, {name: 'v-touch'})
 Vue.use(require('vue-wechat-title'))
 Vue.use(WechatPlugin)
 Vue.use(Pagination);

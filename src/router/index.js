@@ -8,6 +8,7 @@ const uploadPage = () => import('../components/uploadPage.vue')
 const manage = () => import('../components/manage.vue')
 const upload = () => import('../components/upload.vue')
 const career = () => import('../components/career.vue')
+const show = () => import('../components/show.vue')
 
 Vue.use(Router)
 
@@ -56,13 +57,20 @@ export default new Router({
         title: '素人种草'
       },
       component: upload
-    },,{
+    },{
       path: '/career',
       name: 'career',
       meta: {
         title: '创业测试'
       },
       component: career
+    },{
+      path: '/show',
+      name: 'show',
+      meta: {
+        title: '我要上封面'
+      },
+      component: show
     }
   ]
 })
