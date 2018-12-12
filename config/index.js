@@ -16,21 +16,22 @@ module.exports = {
         // target: 'http://47.91.156.77:3000/',
         changeOrigin: true,
         pathRewrite: {
-          '/api' : '/',     // rewrite path
+          '/api': '/', // rewrite path
         },
       },
-      '/wxSrc':{
+      '/wxSrc': {
         target: 'http://thirdwx.qlogo.cn/',
         // target: 'http://47.91.156.77:3000/',
         changeOrigin: true,
         pathRewrite: {
-          '/wxSrc' : '/',     // rewrite path
+          '/wxSrc': '/', // rewrite path
         },
       }
     },
 
     // Various Dev Server settings
-    host: '192.168.0.116', // can be overwritten by process.env.HOST
+    host: '192.168.100.84', // can be overwritten by process.env.HOST
+    // host: '192.168.0.116', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
