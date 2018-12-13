@@ -521,13 +521,6 @@ export default {
       let picDom = document.querySelector(".showBox");
       let width = picDom.offsetWidth;
       let height = picDom.offsetHeight;
-      // let canvas = document.createElement("canvas");
-      // canvas.width = width * 2;
-      // canvas.height = height * 2;
-      // canvas.style.width = width * 2 + "px";
-      // canvas.style.height = height * 2 + "px";
-      // let context = canvas.getContext("2d");
-      // context.scale(2, 2);
       let scaleBy = 4; //缩放比例
       let opts = {
         // canvas: canvas,
@@ -628,16 +621,21 @@ export default {
     //页面进入计数
     countEnter: function(id) {
       this.$api.common.countEnter({
-        id: id
+        id: id,
+        channel: 'career'
       });
     },
     //完成测试计数
     countFinish: function() {
-      this.$api.common.countResult();
+      this.$api.common.countResult({
+        channel: 'career'
+      });
     },
     //完成分享计数
     countShare: function() {
-      this.$api.common.countShare();
+      this.$api.common.countShare({
+        channel: 'career'
+      });
     },
     //预加载图片
     checkImg: function(list) {
@@ -768,7 +766,8 @@ export default {
         } else {
           this.$api.auth
             .getInfoToken({
-              code: this.$route.query.code
+              code: this.$route.query.code,
+              channel: 'career'
             })
             .then(res => {
               if (res.data.code === 200) {
@@ -780,7 +779,9 @@ export default {
       }
     },
     redirectLocation: function() {
-      this.$api.auth.getInfoAuth().then(res => {
+      this.$api.auth.getInfoAuth({
+        channel: 'career'
+      }).then(res => {
         if (res.data.code === 200) {
           window.location = res.data.data.url;
         }

@@ -473,7 +473,9 @@ export default {
       });
     },
     getTestData() {
-      this.$api.admin.getCareerData().then((res)=>{
+      this.$api.admin.getCareerData({
+        channel: 'career'
+      }).then((res)=>{
         this.countData = res.data.data
       })
     }
