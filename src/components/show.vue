@@ -6,56 +6,84 @@
     </section>
     <section class="choseImg flexCenter" v-if="part === 2">
       <p>我要上封面</p>
-      <button class="make">制作封面</button>
+      <div class="btn">
+        <button class="make">制作封面</button>
+        <input class="upload" type="file" @change="getUploadImg()" accept="image/*" ref="uploadImgData" />
+      </div>
     </section>
     <section class="editImg" v-if="part === 3">
-      <v-touch class="touchBox" @panstart="update" @panend="update"  @panmove="move" @pinchmove="pinch" @pinchstart="update" @pinchend="update" @rotatestart="update" @rotateend="update" @rotatemove="rotate"></v-touch>
+      <v-touch class="touchBox" @panstart="update" @panend="update"  @panmove="move" @pinchmove="pinch" @pinchstart="update" @pinchend="update" @rotatestart="update" @rotateend="rotateEnd" @rotatemove="rotate"></v-touch>
       <div class="imgBox">
         <img :src="styleSrc" class="background" />
-        <img src="../../static/img/user.png" :style="{left: imgStyle.left + 'px',top: imgStyle.top + 'px',width: imgStyle.width + 'px',height: imgStyle.height + 'px'}"/>
-        <p class="userTitle">{{userTitle}}</p>
-        <p class="userName">{{userName}}</p>
+        <!--transform: 'rotate('+ imgStyle.rotate+'deg)'-->
+        <img :src="userUpload" :style="{left: imgStyle.left + 'px',top: imgStyle.top + 'px',width: imgStyle.width + 'px',height: imgStyle.height}"/>
+        <p class="userTitle" :style="{left: titleStyle.left + 'px',top: titleStyle.top + 'px',fontSize: titleStyle.fontSize + 'px',color: titleStyle.color}">{{userTitle}}</p>
+        <p class="userName" :style="{left: nameStyle.left + 'px',top: nameStyle.top + 'px',fontSize: nameStyle.fontSize + 'px',color: nameStyle.color}">{{userName}}</p>
       </div>
-      <div>
-
-      </div>
-      <div class="colorChose">
-        <p>文字颜色:</p>
-        <div class="colorBlock" v-for="item in colorList" :style="{backgroundColor: item}"></div>
+      <div class="backIcon" @click.stop="back"></div>
+      <div class="forwardIcon" @click.stop="forward"></div>
+      <div class="colorChose" v-if="editStep ===2||editStep === 3">
+        <div @click="choseTextColor(item)" class="colorBlock" v-for="item in colorList" :style="{backgroundColor: item}" :class="{'active': selectColor === item}"></div>
       </div>
       <div class="styleChose">
-        <swiper dots-position="center" height="25vh" dots-class="dotStyle">
-          <swiper-item v-for="(item,index) in styleList" :key="index">
-            <div class="ImgBlock">
-              <img v-for="img in item.child" :src="img.src" @click="choseImg(img)" />
-            </div>
-          </swiper-item>
-        </swiper>
+        <div class="ImgBlock">
+          <img v-for="img in styleListNew" :src="img.src" @click="choseImg(img)" />
+        </div>
+        <!--<swiper dots-position="center" height="25vh" dots-class="dotStyle">-->
+          <!--<swiper-item v-for="(item,index) in styleList" :key="index">-->
+            <!--<div class="ImgBlock">-->
+              <!--<img v-for="img in item.child" :src="img.src" @click="choseImg(img)" />-->
+            <!--</div>-->
+          <!--</swiper-item>-->
+        <!--</swiper>-->
+      </div>
+
+      <div class="inputBox" v-if="showInput">
+        <div class="inputItem title" v-if="editStep=== 2">
+          <p>请输入标题</p>
+          <input v-model="userTitle" />
+          <button @click="confirmInput">确认</button>
+        </div>
+        <div class="inputItem name" v-if="editStep===3">
+          <p>请输入名称</p>
+          <input v-model="userName" />
+          <button @click="confirmName">确认</button>
+        </div>
+      </div>
+      <div class="tipsBox" v-if="tipShow">
+        <div class="tipContain">
+          <div class="tip">
+            <img src="../../static/showSrc/tip1.png" />
+          </div>
+        </div>
+
       </div>
     </section>
     <section class="resultBlock" v-if="part === 4">
-
+        <img :src="captureData" />
+        <div class="backIcon" @click.stop="backMake"></div>
     </section>
 
   </div>
 </template>
 
 <script>
-  import {
-    Swiper,
-    SwiperItem,
-    XImg
-  } from "vux";
+  import html2canvas from "html2canvas";
+  // import {
+  //   Swiper,
+  //   SwiperItem,
+  //   XImg
+  // } from "vux";
   export default {
     name: "show",
-    components:{
-      Swiper,
-      SwiperItem,
-      XImg
-    },
+    // components:{
+    //   Swiper,
+    //   SwiperItem,
+    //   XImg
+    // },
     data() {
       return {
-        part: 3,
+        part: 1,
         type: "",
         scale: "",
         distanceX: "",
@@ -65,22 +93,24 @@
           left: 0,
           top: 0,
           width: 40,
-          height: 40,
+          height: 'auto',
           rotate: 0
         },
         titleStyle:{
-          left: 0,
-          top: 0,
+          left:70,
+          top: 100,
           width: 40,
           height: 40,
-          color: '#000'
+          color: '#000',
+          fontSize: 24
         },
         nameStyle:{
-          left: 0,
-          top: 0,
+          left: 70,
+          top: 300,
           width: 40,
           height: 40,
-          color: '#000'
+          color: '#000',
+          fontSize: 20
         },
         recordStyle:{
           left: 0,
@@ -89,6 +119,31 @@
           height: 40,
           rotate: 0
         },
+        styleListNew:[{
+          src: '../../static/showSrc/fengmian/1.png'
+        },{
+          src: '../../static/showSrc/fengmian/2.png'
+        },{
+          src: '../../static/showSrc/fengmian/3.png'
+        },{
+          src: '../../static/showSrc/fengmian/4.png'
+        },{
+          src: '../../static/showSrc/fengmian/5.png'
+        },{
+          src: '../../static/showSrc/fengmian/6.png'
+        },{
+          src: '../../static/showSrc/fengmian/7.png'
+        },{
+          src: '../../static/showSrc/fengmian/8.png'
+        },{
+          src: '../../static/showSrc/fengmian/9.png'
+        },{
+          src: '../../static/showSrc/fengmian/10.png'
+        },{
+          src: '../../static/showSrc/fengmian/11.png'
+        },{
+          src: '../../static/showSrc/fengmian/12.png'
+        }],
         styleList:[{
           name: 'part1',
           child:[{
@@ -123,12 +178,20 @@
             src: '../../static/showSrc/fengmian/12.png'
           }]
         }],
+        tipShow: true,
+        editStep: 1,
         styleSrc: '../../static/showSrc/fengmian/1.png',
+        userUpload: '',
+        showInput: false,
+        inputType:'title',
         userTitle: '',
         userTitleColor: '#000',
         userName: '',
+        userNameSave: '',
         userNameColor: '#000',
-        colorList:['#267832','#888','#f9f9f9','#675432']
+        colorList:['#267832','#888','#f9f9f9','#675432','#561232'],
+        selectColor:'#000',
+        captureData: ''
       };
     },
     methods: {
@@ -166,24 +229,24 @@
                 timestamp: res.data.data.sign.timestamp, // 必填,生成签名的时间戳
                 nonceStr: res.data.data.sign.nonceStr, // 必填,生成签名的随机串
                 signature: res.data.data.sign.signature, // 必填,签名
-                jsApiList: ["onMenuShareTimeline", "onMenuShareAppMessage"] // 必填,需要使用的JS接口列表
+                jsApiList: ["onMenuShareTimeline", "onMenuShareAppMessage","chooseImage","previewImage"] // 必填,需要使用的JS接口列表
               });
               _self.$wechat.ready(function() {
                 _self.$wechat.showOptionMenu();
                 _self.$wechat.onMenuShareTimeline({
-                  title: "测测你的动物型创业人格", // 分享标题
-                  link: "http://newmedia.yokelly.com.cn/career", // 分享链接,该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                  imgUrl: "http://newmedia.yokelly.com.cn/src/catIcon.jpg", // 分享图标
+                  title: "我要上封面", // 分享标题
+                  link: "http://newmedia.yokelly.com.cn/show", // 分享链接,该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                  // imgUrl: "http://newmedia.yokelly.com.cn/src/catIcon.jpg", // 分享图标
                   success: function() {
                     // 用户点击了分享后执行的回调函数
                     _self.countShare();
                   }
                 });
                 _self.$wechat.onMenuShareAppMessage({
-                  title: "测测你的动物型创业人格", // 分享标题
-                  desc: "在创业时代，哪种动物能代表你的创业人格？", // 分享描述
-                  link: "http://newmedia.yokelly.com.cn/career", // 分享链接,该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                  imgUrl: "http://newmedia.yokelly.com.cn/src/catIcon.jpg", // 分享图标
+                  title: "我要上封面", // 分享标题
+                  desc: "制作你的专属时尚封面！", // 分享描述
+                  link: "http://newmedia.yokelly.com.cn/show", // 分享链接,该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                  imgUrl: "", // 分享图标
                   type: "", // 分享类型,music.video或link,不填默认为link
                   dataUrl: "", // 如果type是music或video,则要提供数据链接,默认为空
                   success: function() {
@@ -206,8 +269,12 @@
             })
             .then(res => {
               if (res.data.code === 200) {
+                this.userNameSave = res.data.data.nickname
                 this.countEnter(id);
-
+                this.jsShareInit();
+                setTimeout(()=>{
+                  this.part = 2
+                },2000)
               } else {
                 window.localStorage.removeItem("userIdShow");
                 this.redirectLocation();
@@ -271,7 +338,10 @@
       //容器生成图片
       cutImg: function() {
         let _self = this;
-        let picDom = document.querySelector(".showBox");
+        _self.$vux.loading.show({
+          text: "生成中"
+        });
+        let picDom = document.querySelector(".imgBox");
         let width = picDom.offsetWidth;
         let height = picDom.offsetHeight;
         let scaleBy = 4; //缩放比例
@@ -286,44 +356,184 @@
           windowHeight: height
         };
         html2canvas(picDom, opts).then(data => {
-          // _self.captureData = data.toDataURL();
-          // _self.captureShow = true;
+          _self.captureData = data.toDataURL();
+          _self.part = 4;
+          _self.countFinish()
           _self.$vux.loading.hide();
         });
       },
 
+      uploadImg: function () {
+        let _self = this
+        _self.$wechat.chooseImage({
+          count: 1, // 默认9
+          sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+          sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+          success: function (res) {
+            if(window.wxjs_is_wkwebview){
+              let id = res.localIds[0]; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+              _self.$wechat.getLocalImgData({
+                localId: id, // 图片的localID
+                success: function (res) {
+                  _self.userUpload = res.localData; // localData是图片的base64数据，可以用img标签显示
+                  _self.part = 3
+                  _self.tipShow = true
+                  setTimeout(()=>{
+                    _self.tipShow = false
+                  },1500)
+                }
+              });
+            }else{
+              _self.userUpload = res.localIds[0]; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+              _self.part = 3
+              _self.tipShow = true
+              setTimeout(()=>{
+                _self.tipShow = false
+              },1500)
+            }
+          }
+        });
 
+
+      },
+      getUploadImg: function () {
+        let _self = this
+        console.log(this.$refs.uploadImgData.files[0])
+        // let img = new Image();
+        if(window.FileReader) {
+          let fr = new FileReader();
+          fr.readAsDataURL(_self.$refs.uploadImgData.files[0]);
+          fr.onloadend = function() {
+            _self.userUpload = this.result
+            _self.part = 3
+            _self.tipShow = true
+            setTimeout(()=>{
+              _self.tipShow = false
+            },1500)
+          }
+        }
+
+        // let _self = this
+        // _self.userUpload = window.URL.createObjectURL(this.$refs.uploadImgData.files[0]);
+        // _self.part = 3
+        // _self.tipShow = true
+        // setTimeout(()=>{
+        //   _self.tipShow = false
+        // },1500)
+      },
       update: function(){
-        this.recordStyle.left =  this.imgStyle.left
-        this.recordStyle.top =  this.imgStyle.top
-        this.recordStyle.width =  this.imgStyle.width
-        this.recordStyle.height =  this.imgStyle.height
-        this.recordStyle.rotate =  this.imgStyle.rotate
+        if(this.editStep === 1){
+          this.recordStyle.left =  this.imgStyle.left
+          this.recordStyle.top =  this.imgStyle.top
+          this.recordStyle.width =  this.imgStyle.width
+          // this.recordStyle.height =  this.imgStyle.height
+          // this.recordStyle.rotate =  this.imgStyle.rotate%360
+        }else if(this.editStep === 2){
+          this.recordStyle.left =  this.titleStyle.left
+          this.recordStyle.top =  this.titleStyle.top
+          this.recordStyle.width =  this.titleStyle.width
+          this.recordStyle.height =  this.titleStyle.height
+          this.recordStyle.rotate =  this.titleStyle.rotate
+          this.recordStyle.fontSize = this.titleStyle.fontSize
+        }else if(this.editStep === 3){
+          this.recordStyle.left =  this.nameStyle.left
+          this.recordStyle.top =  this.nameStyle.top
+          this.recordStyle.width =  this.nameStyle.width
+          this.recordStyle.height =  this.nameStyle.height
+          this.recordStyle.rotate =  this.nameStyle.rotate
+          this.recordStyle.fontSize = this.nameStyle.fontSize
+
+        }
+
+      },
+      rotateEnd: function () {
+        if(this.editStep === 1){
+          this.recordStyle.rotate =  this.imgStyle.rotate%360
+        }
       },
       move: function(e) {
-        console.log(e);
         this.distanceX = e.deltaX;
         this.distanceY = e.deltaY;
-        this.imgStyle.left = this.recordStyle.left + e.deltaX
-        this.imgStyle.top = this.recordStyle.top + e.deltaY
+        if(this.editStep === 1){
+          this.imgStyle.left = this.recordStyle.left + e.deltaX
+          this.imgStyle.top = this.recordStyle.top + e.deltaY
+        }else if(this.editStep === 2){
+          this.titleStyle.left = this.recordStyle.left + e.deltaX
+          this.titleStyle.top = this.recordStyle.top + e.deltaY
+        }else if(this.editStep === 3){
+          this.nameStyle.left = this.recordStyle.left + e.deltaX
+          this.nameStyle.top = this.recordStyle.top + e.deltaY
+        }
+
       },
       pinch: function(e) {
-        console.log(e);
         this.scale = e.scale;
-        this.imgStyle.width = this.recordStyle.width*e.scale;
-        this.imgStyle.height = this.recordStyle.height*e.scale;
+        if(this.editStep === 1){
+          this.imgStyle.width = this.recordStyle.width*e.scale;
+          // this.imgStyle.height = this.recordStyle.height*e.scale;
+        }else if(this.editStep === 2){
+          this.titleStyle.width = this.recordStyle.width*e.scale;
+          this.titleStyle.height = this.recordStyle.height*e.scale;
+          this.titleStyle.fontSize = this.recordStyle.fontSize*e.scale;
+        }else if(this.editStep === 3){
+          this.nameStyle.width = this.recordStyle.width*e.scale;
+          this.nameStyle.height = this.recordStyle.height*e.scale;
+          this.nameStyle.fontSize = this.recordStyle.fontSize*e.scale;
+
+        }
+
       },
       rotate: function(e) {
         this.type = "rotate";
         this.rotateDeg = e.rotation;
-        this.imgStyle.rotate = this.recordStyle.rotate + e.rotation -360;
+        this.imgStyle.rotate = this.recordStyle.rotate + e.rotation;
       },
       choseImg: function (item) {
         this.styleSrc = item.src
+      },
+      choseTextColor: function (val) {
+        this.selectColor = val
+        if(this.editStep === 2){
+          this.titleStyle.color = val
+        }else if(this.editStep === 3){
+          this.nameStyle.color = val
+        }
+      },
+      confirmInput: function () {
+        this.editStep = 2
+        this.showInput = false
+      },
+      confirmName: function () {
+        this.editStep = 3
+        this.showInput = false
+      },
+      //步骤前进
+      forward: function () {
+        if(this.editStep === 3){
+          this.cutImg()
+        }else{
+          if(!this.userName&&this.editStep=== 2){
+            this.userName = this.userNameSave
+          }
+          this.showInput = true
+          this.editStep += 1
+        }
+      },
+      //步骤后退
+      back: function () {
+        if(this.editStep === 1){
+          this.part = 2
+        }else{
+          this.editStep -= 1
+        }
+      },
+      backMake: function () {
+        this.part = 3
       }
     },
     mounted() {
       this.checkUser();
+      this.imgStyle.width = document.body.scrollWidth
     }
   };
 </script>
@@ -358,7 +568,9 @@
     width: 100%;
     height: 100%;
     background: #000;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
     .loadingPage{
       height: 100%;
       width: 100%;
@@ -384,26 +596,38 @@
         color: #fff;
         margin-bottom: 30%;
       }
-      .make{
-        width: 100px;
-        height: 32px;
-        background: #fff;
-        outline: none;
-        border: solid 1px #ddd;
-        animation: opacityTrans 1.5s infinite linear;
+      .btn{
+        position: relative;
+        .make{
+          width: 100px;
+          height: 32px;
+          background: #fff;
+          outline: none;
+          border: solid 1px #ddd;
+          animation: opacityTrans 1.5s infinite linear;
+        }
+        .upload{
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100px;
+          height: 32px;
+          opacity: 0;
+          z-index: 5;
+        }
       }
+
     }
     .editImg{
-      height: 100%;
+      height: 100vh;
+      overflow-y: scroll;
       width: 100%;
       background: #ddd;
-      display: flex;
-      flex-flow: column;
-      padding-top: 70vh;
+      align-self: flex-start;
       .touchBox {
         position: absolute;
-        height: 70%;
-        width: 100%;
+        height: 135.73vw;
+        width: 100vw;
         overflow: hidden;
         top: 0;
         left: 0;
@@ -411,55 +635,191 @@
       }
       .imgBox{
         z-index: 1;
-        position: absolute;
-        height: 70%;
-        width: 100%;
+        height: 135.73vw;
+        width: 100vw;
         overflow: hidden;
-        top: 0;
-        left: 0;
-
-        img{
+        background: #f3f3f3;
+        position: relative;
+        img,.userTitle,.userName{
           position: absolute;
         }
         .background{
-          width: 100%;
-          height: 100%;
+          width: 100vw;
+          height: 135.73vw;
           z-index: 10;
+          position: absolute;
+          left: 0;
+          top: 0;
         }
+        .userTitle,.userName{
+          z-index: 11;
+          width: 70vw;
+          height: auto;
+          text-align: center;
+          line-height: 1.1;
+        }
+
       }
       .colorChose{
-        padding: 0.5vh 0;
-        height: 5vh;
+        height: 32px;
+        min-height: 32px;
         width: 100%;
+        margin: 10px 0;
         display: flex;
+        justify-content: space-around;
         align-items: center;
         font-size: 14px;
         .colorBlock{
-          width: 20%;
-          height: 4vh;
+          width: 20px;
+          height: 20px;
+          border-radius: 10px;
+          border: solid 3px #fff;
+        }
+        .active{
+          width: 28px;
+          height: 28px;
+          border-radius: 14px;
         }
       }
       .styleChose{
         width: 100%;
-        height: 25vh;
+        height: 33.72vw;
+        min-height: 33.72vw;
+        overflow-x: auto;
         position: relative;
         .ImgBlock{
           width: 100%;
           height: 100%;
           display: flex;
           img{
-            margin: 0 0.5%;
-            height: 20vh;
-            width: 24%;
+            height: 100%;
+            width: 25%;
+            margin-left: 8px;
           }
         }
       }
-      .dotStyle{
-        bottom: 5px;
+      .backIcon{
+        width: 40px;
+        height: 40px;
+        position: fixed;
+        left: 1rem;
+        top: 40%;
+        z-index: 15;
+        background: url("../../static/showSrc/return.png");
+        background-size: cover;
       }
+      .forwardIcon{
+        width: 40px;
+        height: 40px;
+        position: fixed;
+        right: 1rem;
+        top: 40%;
+        z-index: 15;
+        background: url("../../static/showSrc/next.png");
+        background-size: cover;
+      }
+      .inputBox{
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: #000;
+        z-index: 16;
+        color: #fff;
+        padding-top: 100px;
+        .inputItem{
+          width: 100%;
+          display: flex;
+          flex-flow: column;
+          align-items: center;
+          padding: 0 10%;
+          p{
+            width: 100%;
+            margin-bottom: 1rem;
+            font-size: 18px;
+          }
+          input{
+            width: 100%;
+            height: 32px;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #c3ad71;
+            margin-bottom: 2rem;
+            outline: none;
+            color: #c3ad71;
+            padding: 0 10px;
+            border-radius: 0;
+          }
+          button{
+            width: 100px;
+            height: 32px;
+            border: 2px solid #c3ad71;
+            background: transparent;
+            color: #fff;
+            border-radius: 3px;
+            outline: none;
+          }
+        }
+      }
+      .tipsBox{
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 20;
+        .tipContain{
+          width: 200px;
+          height: 172.69px;
+          background: #666;
+          padding: 1rem;
+          border-radius: 3px;
+          .tip{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: solid 2px #ddd;
+            background: url("../../static/showSrc/tipBg.png");
+            background-size: 100% 100%;
+            img{
+              margin-bottom: 2rem;
+              width: 55px;
+              height: 64.5px;
+            }
+          }
+        }
+
+      }
+      /*.dotStyle{*/
+        /*bottom: 5px;*/
+      /*}*/
     }
     .resultBlock{
-
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      width: 100%;
+      img{
+        width: 100vw;
+        height: auto;
+      }
+      .backIcon{
+        width: 40px;
+        height: 40px;
+        position: fixed;
+        left: 1rem;
+        top: 40%;
+        z-index: 15;
+        background: url("../../static/showSrc/return.png");
+        background-size: cover;
+      }
     }
   }
 </style>

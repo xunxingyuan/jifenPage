@@ -6,6 +6,8 @@
       <div class="nav" @click="chose(2)" :class="{'active': choseData===2 }">种草审批管理</div>
       <div class="nav" @click="chose(3)" :class="{'active': choseData===3 }">种草通用设置</div>
       <div class="nav" @click="chose(4)" :class="{'active': choseData===4 }">创业测试数据</div>
+      <div class="nav" @click="chose(5)" :class="{'active': choseData===5 }">封面制作数据</div>
+
     </div>
     <div class="right">
       <div v-if="choseData === 1">
@@ -181,6 +183,17 @@
           <p>页面分享成功次数：{{countData.shareCount}}</p>
         </div>
       </div>
+      <div v-if="choseData === 5">
+        <div class="header">
+          <span class="topNav">数据概况</span>
+        </div>
+        <div>
+          <p>参与总用户数：{{showData.userCount}}</p>
+          <p>首页点击量：{{showData.viewCount}}</p>
+          <p>封面制作完成数量：{{showData.resultCount}}</p>
+          <p>页面分享成功次数：{{showData.shareCount}}</p>
+        </div>
+      </div>
     </div>
     <div class="viewImgBox" v-if="showImgCtrl">
       <div class="imgContainer" @click="showImgCtrl = false">
@@ -265,6 +278,12 @@ export default {
         "viewCount": 0,
         "resultCount": 0,
         "shareCount": 0
+      },
+      showData:{
+        "userCount": 0,
+        "viewCount": 0,
+        "resultCount": 0,
+        "shareCount": 0
       }
     };
   },
@@ -302,6 +321,8 @@ export default {
         this.getNotice();
       } else if (val === 4) {
         this.getTestData();
+      }else if (val === 5) {
+        this.getShowData();
       }
     },
     searchUser: function(item) {
@@ -478,7 +499,14 @@ export default {
       }).then((res)=>{
         this.countData = res.data.data
       })
-    }
+    },
+    getShowData() {
+      this.$api.admin.getCareerData({
+        channel: 'show'
+      }).then((res)=>{
+        this.showData = res.data.data
+      })
+    },
   },
   mounted() {
     let state = window.sessionStorage.getItem("loginState");
@@ -497,6 +525,7 @@ export default {
 .manage {
   width: 100%;
   height: 100%;
+  min-width: 1000px;
   display: flex;
   background: #f7f7f7;
   .left {
