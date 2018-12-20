@@ -5,18 +5,17 @@
       <p>Loading....</p>
     </section>
     <section class="choseImg flexCenter" v-if="part === 2">
-      <p>我要上封面</p>
+      <img src="http://newmedia.yokelly.com.cn/src/show/home.jpg" class="home" />
       <div class="btn">
-        <button class="make">制作封面</button>
         <input class="upload" type="file" @change="getUploadImg()" accept="image/*" ref="uploadImgData" />
       </div>
     </section>
     <section class="editImg" v-if="part === 3">
-      <v-touch class="touchBox" @panstart="update" @panend="update"  @panmove="move" @pinchmove="pinch" @pinchstart="update" @pinchend="update" @rotatestart="update" @rotateend="rotateEnd" @rotatemove="rotate"></v-touch>
-      <div class="imgBox">
-        <img :src="styleSrc" class="background" />
+      <v-touch class="touchBox" :style="{height: countHeight + 'px'}" @panstart="update" @panend="update"  @panmove="move" @pinchmove="pinch" @pinchstart="update" @pinchend="update" @rotatestart="update" @rotateend="rotateEnd" @rotatemove="rotate"></v-touch>
+      <div class="imgBox" :style="{height: countHeight + 'px',width: countHeight*1563/2122 + 'px',minHeight: countHeight + 'px' }">
+        <img :src="styleSrc" class="background" :style="{height: countHeight + 'px',width: countHeight*1563/2122 + 'px'}" />
         <!--transform: 'rotate('+ imgStyle.rotate+'deg)'-->
-        <img :src="userUpload" :style="{left: imgStyle.left + 'px',top: imgStyle.top + 'px',width: imgStyle.width + 'px',height: imgStyle.height}"/>
+        <img style="z-index: 5" :src="userUpload" :style="{left: imgStyle.left + 'px',top: imgStyle.top + 'px',width: imgStyle.width + 'px',height: imgStyle.height}"/>
         <p class="userTitle" :style="{left: titleStyle.left + 'px',top: titleStyle.top + 'px',fontSize: titleStyle.fontSize + 'px',color: titleStyle.color}">{{userTitle}}</p>
         <p class="userName" :style="{left: nameStyle.left + 'px',top: nameStyle.top + 'px',fontSize: nameStyle.fontSize + 'px',color: nameStyle.color}">{{userName}}</p>
       </div>
@@ -119,30 +118,72 @@
           height: 40,
           rotate: 0
         },
+        imgList:[{
+          img: 'http://newmedia.yokelly.com.cn/src/show/home.jpg'
+        },{
+          img: 'http://newmedia.yokelly.com.cn/src/show/page01.jpg',
+        },{
+          img: 'http://newmedia.yokelly.com.cn/src/show/page01_bg.png',
+        },{
+          img: 'http://newmedia.yokelly.com.cn/src/show/page02.jpg',
+        },{
+          img: 'http://newmedia.yokelly.com.cn/src/show/page02_bg.png',
+        },{
+          img: 'http://newmedia.yokelly.com.cn/src/show/page03.jpg',
+        },{
+          img: 'http://newmedia.yokelly.com.cn/src/show/page03_bg.png',
+        },{
+          img: 'http://newmedia.yokelly.com.cn/src/show/page04.jpg',
+        },{
+          img: 'http://newmedia.yokelly.com.cn/src/show/page04_bg.png',
+        },{
+          img: 'http://newmedia.yokelly.com.cn/src/show/page05.jpg',
+        },{
+          img: 'http://newmedia.yokelly.com.cn/src/show/page05_bg.png',
+        },{
+          img: 'http://newmedia.yokelly.com.cn/src/show/page06.jpg',
+        },{
+          img: 'http://newmedia.yokelly.com.cn/src/show/page06_bg.png',
+        },{
+          img: 'http://newmedia.yokelly.com.cn/src/show/page07.jpg',
+        },{
+          img: 'http://newmedia.yokelly.com.cn/src/show/page07_bg.png',
+        },{
+          img: 'http://newmedia.yokelly.com.cn/src/show/page08.jpg',
+        },{
+          img: 'http://newmedia.yokelly.com.cn/src/show/page08_bg.png',
+        },{
+          img: 'http://newmedia.yokelly.com.cn/src/show/page09.jpg',
+        },{
+          img: 'http://newmedia.yokelly.com.cn/src/show/page09_bg.png',
+        }],
         styleListNew:[{
-          src: '../../static/showSrc/fengmian/1.png'
+          src: 'http://newmedia.yokelly.com.cn/src/show/page01.jpg',
+          url: 'http://newmedia.yokelly.com.cn/src/show/page01_bg.png'
         },{
-          src: '../../static/showSrc/fengmian/2.png'
+          src: 'http://newmedia.yokelly.com.cn/src/show/page02.jpg',
+          url: 'http://newmedia.yokelly.com.cn/src/show/page02_bg.png'
         },{
-          src: '../../static/showSrc/fengmian/3.png'
+          src: 'http://newmedia.yokelly.com.cn/src/show/page03.jpg',
+          url: 'http://newmedia.yokelly.com.cn/src/show/page03_bg.png'
         },{
-          src: '../../static/showSrc/fengmian/4.png'
+          src: 'http://newmedia.yokelly.com.cn/src/show/page04.jpg',
+          url: 'http://newmedia.yokelly.com.cn/src/show/page04_bg.png'
         },{
-          src: '../../static/showSrc/fengmian/5.png'
+          src: 'http://newmedia.yokelly.com.cn/src/show/page05.jpg',
+          url: 'http://newmedia.yokelly.com.cn/src/show/page05_bg.png'
         },{
-          src: '../../static/showSrc/fengmian/6.png'
+          src: 'http://newmedia.yokelly.com.cn/src/show/page06.jpg',
+          url: 'http://newmedia.yokelly.com.cn/src/show/page06_bg.png'
         },{
-          src: '../../static/showSrc/fengmian/7.png'
+          src: 'http://newmedia.yokelly.com.cn/src/show/page07.jpg',
+          url: 'http://newmedia.yokelly.com.cn/src/show/page07_bg.png'
         },{
-          src: '../../static/showSrc/fengmian/8.png'
+          src: 'http://newmedia.yokelly.com.cn/src/show/page08.jpg',
+          url: 'http://newmedia.yokelly.com.cn/src/show/page08_bg.png'
         },{
-          src: '../../static/showSrc/fengmian/9.png'
-        },{
-          src: '../../static/showSrc/fengmian/10.png'
-        },{
-          src: '../../static/showSrc/fengmian/11.png'
-        },{
-          src: '../../static/showSrc/fengmian/12.png'
+          src: 'http://newmedia.yokelly.com.cn/src/show/page09.jpg',
+          url: 'http://newmedia.yokelly.com.cn/src/show/page09_bg.png'
         }],
         styleList:[{
           name: 'part1',
@@ -180,7 +221,7 @@
         }],
         tipShow: true,
         editStep: 1,
-        styleSrc: '../../static/showSrc/fengmian/1.png',
+        styleSrc: 'http://newmedia.yokelly.com.cn/src/show/page01_bg.png',
         userUpload: '',
         showInput: false,
         inputType:'title',
@@ -191,7 +232,8 @@
         userNameColor: '#000',
         colorList:['#267832','#888','#f9f9f9','#675432','#561232'],
         selectColor:'#000',
-        captureData: ''
+        captureData: '',
+        countHeight: 0
       };
     },
     methods: {
@@ -272,9 +314,9 @@
                 this.userNameSave = res.data.data.nickname
                 this.countEnter(id);
                 this.jsShareInit();
-                setTimeout(()=>{
+                this.checkImg(this.imgList).then(() => {
                   this.part = 2
-                },2000)
+                });
               } else {
                 window.localStorage.removeItem("userIdShow");
                 this.redirectLocation();
@@ -344,6 +386,9 @@
         let picDom = document.querySelector(".imgBox");
         let width = picDom.offsetWidth;
         let height = picDom.offsetHeight;
+        console.log(width)
+        console.log(height)
+
         let scaleBy = 4; //缩放比例
         let opts = {
           // canvas: canvas,
@@ -355,12 +400,14 @@
           windowWidth: width,
           windowHeight: height
         };
-        html2canvas(picDom, opts).then(data => {
-          _self.captureData = data.toDataURL();
-          _self.part = 4;
-          _self.countFinish()
-          _self.$vux.loading.hide();
-        });
+        setTimeout(()=>{
+          html2canvas(picDom, opts).then((data) => {
+            _self.captureData = data.toDataURL();
+            _self.part = 4;
+            _self.countFinish()
+            _self.$vux.loading.hide();
+          });
+        },200)
       },
 
       uploadImg: function () {
@@ -489,7 +536,7 @@
         this.imgStyle.rotate = this.recordStyle.rotate + e.rotation;
       },
       choseImg: function (item) {
-        this.styleSrc = item.src
+        this.styleSrc = item.url
       },
       choseTextColor: function (val) {
         this.selectColor = val
@@ -533,7 +580,17 @@
     },
     mounted() {
       this.checkUser();
-      this.imgStyle.width = document.body.scrollWidth
+      let width = document.body.scrollWidth
+      let height = document.body.scrollHeight
+      let leftLen = (height-50-100)- (width*2122)/1563
+      if(leftLen>0){
+        this.imgStyle.width = document.body.scrollWidth
+        this.countHeight = (width*2122)/1563
+      }else{
+        this.imgStyle.width = ((height-50-100)*1563)/2122
+        this.countHeight = height-50-100
+      }
+      // this.imgStyle.width = document.body.scrollWidth
     }
   };
 </script>
@@ -591,27 +648,24 @@
       height: 100%;
       width: 100%;
       flex-flow: column;
-      p{
-        font-size: 32px;
-        color: #fff;
-        margin-bottom: 30%;
+      align-items: center;
+      justify-content: center;
+      .home{
+        width: 100%;
+        height: auto;
       }
       .btn{
-        position: relative;
-        .make{
-          width: 100px;
-          height: 32px;
-          background: #fff;
-          outline: none;
-          border: solid 1px #ddd;
-          animation: opacityTrans 1.5s infinite linear;
-        }
+        position: absolute;
+        right: 0;
+        bottom: 5%;
+        width: 50%;
+        height: 150px;
         .upload{
           position: absolute;
           left: 0;
           top: 0;
-          width: 100px;
-          height: 32px;
+          width: 100%;
+          height: 100%;
           opacity: 0;
           z-index: 5;
         }
@@ -621,12 +675,15 @@
     .editImg{
       height: 100vh;
       overflow-y: scroll;
+      display: flex;
+      align-items: center;
+      flex-flow: column;
       width: 100%;
       background: #ddd;
       align-self: flex-start;
       .touchBox {
         position: absolute;
-        height: 135.73vw;
+        /*height: 135.73vw;*/
         width: 100vw;
         overflow: hidden;
         top: 0;
@@ -635,8 +692,8 @@
       }
       .imgBox{
         z-index: 1;
-        height: 135.73vw;
-        width: 100vw;
+        /*height: 135.73vw;*/
+        /*width: 100vw;*/
         overflow: hidden;
         background: #f3f3f3;
         position: relative;
@@ -644,8 +701,8 @@
           position: absolute;
         }
         .background{
-          width: 100vw;
-          height: 135.73vw;
+          width: 100%;
+          height: 100%;
           z-index: 10;
           position: absolute;
           left: 0;
@@ -661,10 +718,13 @@
 
       }
       .colorChose{
-        height: 32px;
-        min-height: 32px;
+        height: 50px;
+        min-height: 50px;
         width: 100%;
-        margin: 10px 0;
+        background: #f5f5f5;
+        border-top: solid 1px #ddd;
+        border-bottom: solid 1px #ddd;
+        padding: 9px 0;
         display: flex;
         justify-content: space-around;
         align-items: center;
@@ -683,17 +743,20 @@
       }
       .styleChose{
         width: 100%;
-        height: 33.72vw;
-        min-height: 33.72vw;
+        height: 100px;
+        min-height: 100px;
         overflow-x: auto;
+        padding-top: 4px;
         position: relative;
         .ImgBlock{
           width: 100%;
           height: 100%;
           display: flex;
+          padding-right: 8px;
           img{
-            height: 100%;
-            width: 25%;
+            height: 96px;
+            width: 72px;
+            min-width: 72px;
             margin-left: 8px;
           }
         }
