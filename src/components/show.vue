@@ -1,8 +1,8 @@
 <template>
   <div class="show">
     <section class="loadingPage flexCenter" v-if="part === 1">
-      <img class="loading" src="../../static/showSrc/loading.png"/>
-      <p>Loading....</p>
+      <img class="loading" src="../../static/showSrc/loading.gif"/>
+      <!--<p>Loading....</p>-->
     </section>
     <section class="choseImg flexCenter" v-if="part === 2">
       <img src="http://newmedia.yokelly.com.cn/src/show/home.jpg" class="home" />
@@ -631,12 +631,16 @@
     .loadingPage{
       height: 100%;
       width: 100%;
-      background: #000;
+      background: #fff;
       flex-flow: column;
+      /*.loading{*/
+        /*width: 100px;*/
+        /*height: 100px;*/
+        /*animation: rotateTrans 1.5s infinite linear;*/
+      /*}*/
       .loading{
-        width: 100px;
-        height: 100px;
-        animation: rotateTrans 1.5s infinite linear;
+        width: 250px;
+        height: auto;
       }
       p{
         color: #fff;
