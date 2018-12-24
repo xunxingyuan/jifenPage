@@ -401,9 +401,9 @@
         _self.$vux.loading.show({
           text: "生成中"
         });
-        let picDom = document.querySelector(".imgBox");
-        let width = picDom.offsetWidth;
-        let height = picDom.offsetHeight;
+        let imgWidth = _self.imgStyle.width
+        let imgHeight = _self.imgStyle.height
+
         if (navigator.userAgent.match(/iphone/i)){
           if(_self.Orientation != "" && _self.Orientation != 1){
             switch(_self.Orientation){
@@ -421,9 +421,9 @@
             }
           }
         }
-
-        console.log(width)
-        console.log(height)
+        let picDom = document.querySelector(".imgBox");
+        let width = picDom.offsetWidth;
+        let height = picDom.offsetHeight;
 
         let scaleBy = 4; //缩放比例
         let opts = {
@@ -486,6 +486,63 @@
         }
       },
 
+      //制作图片
+      selectFileImage(file) {
+        // 图片方向角
+        var Orientation = null;
+
+        if (file) {
+          var rFilter = /^(image\/jpeg|image\/png)$/i; // 检查图片格式
+
+          if (!rFilter.test(file.type)) {
+            alert("请选择jpeg、png格式的图片");
+            return;
+          }
+          //获取照片方向角属性
+          EXIF.getData(file, function () {
+            EXIF.getAllTags(this);
+            Orientation = EXIF.getTag(this, 'Orientation');
+          });
+        }
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function (e) {
+          var image = new Image();
+          image.src = e.target.result;
+          image.onload = function () {
+            var canvas = document.createElement("canvas");
+            canvas.width = this.naturalWidth;
+            canvas.height = this.naturalHeight;
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(this, 0, 0, this.naturalWidth, this.naturalHeight);
+            var base64 = null;
+            if (Orientation != "" && Orientation != 1 && Orientation != undefined) {
+              var width = this.naturalWidth;
+              var height = this.naturalHeight;
+              switch (Orientation) {
+                case 6://需要顺时针90度旋转
+                  canvas.width = height;
+                  canvas.height = width;
+                  ctx.rotate(90 * Math.PI / 180);
+                  ctx.drawImage(this, 0, -height);
+                  break;
+                case 8://需要逆时针90度旋转
+                  canvas.width = height;
+                  canvas.height = width;
+                  ctx.rotate(-90 * Math.PI / 180);
+                  ctx.drawImage(this, -width, 0);
+                  break;
+                case 3://需要180度旋转
+                  ctx.rotate(180 * Math.PI / 180);
+                  ctx.drawImage(this, -width, -height);
+                  break;
+              }
+            }
+            base64 = canvas.toDataURL("image/jpeg");
+            _self.userUpload =  base64
+          };
+        };
+      },
       uploadImg: function () {
         let _self = this
         _self.$wechat.chooseImage({
@@ -530,6 +587,13 @@
           _self.Orientation = EXIF.getTag(this, 'Orientation');
           console.log(_self.Orientation)
         });
+
+       // this.selectFileImage(this.$refs.uploadImgData.files[0])
+       //  _self.part = 3
+       //  _self.tipShow = true
+       //  setTimeout(()=>{
+       //    _self.tipShow = false
+       //  },1500)
 
         if(window.FileReader) {
           let fr = new FileReader();
