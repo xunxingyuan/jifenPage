@@ -11,14 +11,15 @@
       </div>
     </section>
     <section class="editImg" v-if="part === 3">
-      <v-touch class="touchBox" :style="{height: countHeight + 'px'}" @panstart="update" @panend="update"  @panmove="move" @pinchmove="pinch" @pinchstart="update" @pinchend="update" @rotatestart="update" @rotateend="rotateEnd" @rotatemove="rotate"></v-touch>
+      <v-touch class="touchBox" :style="{height: countHeight + 'px'}" @panstart="update" @panend="update"  @panmove="move" @pinchmove="pinch" @pinchstart="update" @pinchend="update"></v-touch>
       <div class="imgBox" :style="{height: countHeight + 'px',width: countHeight*1563/2122 + 'px',minHeight: countHeight + 'px' }">
         <img :src="styleSrc" class="background" :style="{height: countHeight + 'px',width: countHeight*1563/2122 + 'px'}" />
         <!--transform: 'rotate('+ imgStyle.rotate+'deg)'-->
-        <img style="z-index: 5" :src="userUpload" :style="{left: imgStyle.left + 'px',top: imgStyle.top + 'px',width: imgStyle.width + 'px',height: imgStyle.height}"/>
+        <img style="z-index: 5" :src="userUpload" :style="{left: imgStyle.left + 'px',top: imgStyle.top + 'px',width: imgStyle.width + 'px',height: imgStyle.height,transform: 'rotate('+ imgStyle.rotate+'deg)'}"/>
         <p class="userTitle" :style="{left: titleStyle.left + 'px',top: titleStyle.top + 'px',fontSize: titleStyle.fontSize + 'px',color: titleStyle.color}">{{userTitle}}</p>
         <p class="userName" :style="{left: nameStyle.left + 'px',top: nameStyle.top + 'px',fontSize: nameStyle.fontSize + 'px',color: nameStyle.color}">{{userName}}</p>
       </div>
+      <div class="transIcon" @click.stop="rotateImg"></div>
       <div class="backIcon" @click.stop="back"></div>
       <div class="forwardIcon" @click.stop="forward"></div>
       <div class="colorChose" v-if="editStep ===2||editStep === 3">
@@ -29,23 +30,25 @@
           <img v-for="img in styleListNew" :src="img.src" @click="choseImg(img)" />
         </div>
         <!--<swiper dots-position="center" height="25vh" dots-class="dotStyle">-->
-          <!--<swiper-item v-for="(item,index) in styleList" :key="index">-->
-            <!--<div class="ImgBlock">-->
-              <!--<img v-for="img in item.child" :src="img.src" @click="choseImg(img)" />-->
-            <!--</div>-->
-          <!--</swiper-item>-->
+        <!--<swiper-item v-for="(item,index) in styleList" :key="index">-->
+        <!--<div class="ImgBlock">-->
+        <!--<img v-for="img in item.child" :src="img.src" @click="choseImg(img)" />-->
+        <!--</div>-->
+        <!--</swiper-item>-->
         <!--</swiper>-->
       </div>
 
       <div class="inputBox" v-if="showInput">
         <div class="inputItem title" v-if="editStep=== 2">
-          <p>请输入标题</p>
-          <input v-model="userTitle" />
+          <p>请输入你的封面标题</p>
+          <input v-model="userTitle" placeholder="输入可以为空" />
+          <p class="tips">手指缩放可以调整大小，底部可以替换文本颜色哦</p>
           <button @click="confirmInput">确认</button>
         </div>
         <div class="inputItem name" v-if="editStep===3">
-          <p>请输入名称</p>
-          <input v-model="userName" />
+          <p>请输入你的姓名</p>
+          <input v-model="userName" placeholder="输入可以为空"  />
+          <p class="tips">手指缩放可以调整大小，底部可以替换文本颜色哦</p>
           <button @click="confirmName">确认</button>
         </div>
       </div>
@@ -59,27 +62,38 @@
       </div>
     </section>
     <section class="resultBlock" v-if="part === 4">
-        <img :src="captureData" />
-        <div class="backIcon" @click.stop="backMake"></div>
+      <img :src="captureData" />
+      <div class="cover" v-if="shareTip">
+        <div class="shareTips">
+          <div class="text">
+            长按保存图片，可分享给好友。
+          </div>
+        </div>
+      </div>
+      <div class="backIcon" @click.stop="backMake"></div>
     </section>
-
+    <div class="musicCtrl" :class="{'trans': musicPlay}" @click="ctrlMusic">
+      <div class="music"></div>
+      <div class="nomusic"></div>
+    </div>
+    <audio
+      id="audio2"
+      style="display: none;"
+      src="http://newmedia.yokelly.com.cn/src/music.mp3"
+      preload="auto"
+      loop="loop"
+    ></audio>
   </div>
 </template>
 
 <script>
   import html2canvas from "html2canvas";
-  // import {
-  //   Swiper,
-  //   SwiperItem,
-  //   XImg
-  // } from "vux";
+  import Vue from "vue";
+  import EXIF from "exif-js";
+  Vue.use(EXIF);    //全局申明
+
   export default {
     name: "show",
-    // components:{
-    //   Swiper,
-    //   SwiperItem,
-    //   XImg
-    // },
     data() {
       return {
         part: 1,
@@ -233,7 +247,10 @@
         colorList:['#267832','#888','#f9f9f9','#675432','#561232'],
         selectColor:'#000',
         captureData: '',
-        countHeight: 0
+        countHeight: 0,
+        shareTip: true,
+        Orientation: '',
+        musicPlay: true
       };
     },
     methods: {
@@ -314,6 +331,7 @@
                 this.userNameSave = res.data.data.nickname
                 this.countEnter(id);
                 this.jsShareInit();
+                this.audioAutoPlay("audio2");
                 this.checkImg(this.imgList).then(() => {
                   this.part = 2
                 });
@@ -386,6 +404,24 @@
         let picDom = document.querySelector(".imgBox");
         let width = picDom.offsetWidth;
         let height = picDom.offsetHeight;
+        if (navigator.userAgent.match(/iphone/i)){
+          if(_self.Orientation != "" && _self.Orientation != 1){
+            switch(_self.Orientation){
+              case 6://需要顺时针（向左）90度旋转
+                _self.imgStyle.rotate += 90
+                break;
+              case 8://需要逆时针（向右）90度旋转
+                _self.imgStyle.rotate -= 90
+                break;
+              case 3://需要180度旋转
+                _self.imgStyle.rotate += 180
+                break;
+              default:
+                break;
+            }
+          }
+        }
+
         console.log(width)
         console.log(height)
 
@@ -400,14 +436,54 @@
           windowWidth: width,
           windowHeight: height
         };
+        _self.shareTip = true
         setTimeout(()=>{
           html2canvas(picDom, opts).then((data) => {
             _self.captureData = data.toDataURL();
             _self.part = 4;
             _self.countFinish()
             _self.$vux.loading.hide();
+            setTimeout(()=>{
+              _self.shareTip = false
+            },1500)
           });
         },200)
+      },
+      //音乐播放
+      audioAutoPlay(id) {
+        let audio = document.getElementById(id);
+        if (window.WeixinJSBridge) {
+          WeixinJSBridge.invoke(
+            "getNetworkType",
+            {},
+            function(e) {
+              audio.play();
+            },
+            false
+          );
+        } else {
+          document.addEventListener(
+            "WeixinJSBridgeReady",
+            function() {
+              WeixinJSBridge.invoke("getNetworkType", {}, function(e) {
+                audio.play();
+              });
+            },
+            false
+          );
+        }
+        audio.play();
+        return false;
+      },
+      ctrlMusic: function() {
+        let audio = document.getElementById("audio2");
+        if (this.musicPlay) {
+          audio.pause();
+          this.musicPlay = false;
+        } else {
+          audio.play();
+          this.musicPlay = true;
+        }
       },
 
       uploadImg: function () {
@@ -447,6 +523,14 @@
         let _self = this
         console.log(this.$refs.uploadImgData.files[0])
         // let img = new Image();
+
+        //去获取拍照时的信息，解决拍出来的照片旋转问题
+        EXIF.getData(this.$refs.uploadImgData.files[0], function() {
+          EXIF.getAllTags(this);
+          _self.Orientation = EXIF.getTag(this, 'Orientation');
+          console.log(_self.Orientation)
+        });
+
         if(window.FileReader) {
           let fr = new FileReader();
           fr.readAsDataURL(_self.$refs.uploadImgData.files[0]);
@@ -492,6 +576,10 @@
 
         }
 
+      },
+      //旋转
+      rotateImg: function () {
+        this.imgStyle.rotate += 90
       },
       rotateEnd: function () {
         if(this.editStep === 1){
@@ -616,6 +704,15 @@
     }
   }
 
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
   .flexCenter{
     display: flex;
     align-items: center;
@@ -634,9 +731,9 @@
       background: #fff;
       flex-flow: column;
       /*.loading{*/
-        /*width: 100px;*/
-        /*height: 100px;*/
-        /*animation: rotateTrans 1.5s infinite linear;*/
+      /*width: 100px;*/
+      /*height: 100px;*/
+      /*animation: rotateTrans 1.5s infinite linear;*/
       /*}*/
       .loading{
         width: 250px;
@@ -681,6 +778,7 @@
       overflow-y: scroll;
       display: flex;
       align-items: center;
+      justify-content: center;
       flex-flow: column;
       width: 100%;
       background: #ddd;
@@ -785,6 +883,17 @@
         background: url("../../static/showSrc/next.png");
         background-size: cover;
       }
+      .transIcon{
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background: url("../../static/showSrc/circle.png");
+        background-size: cover;
+        top: 10px;
+        left: 10px;
+        z-index: 15;
+      }
+
       .inputBox{
         position: fixed;
         width: 100%;
@@ -812,11 +921,15 @@
             background: transparent;
             border: none;
             border-bottom: 2px solid #c3ad71;
-            margin-bottom: 2rem;
             outline: none;
             color: #c3ad71;
             padding: 0 10px;
             border-radius: 0;
+          }
+          .tips{
+            color: #999;
+            font-size: 12px;
+            margin-bottom: 2rem;
           }
           button{
             width: 100px;
@@ -864,7 +977,7 @@
 
       }
       /*.dotStyle{*/
-        /*bottom: 5px;*/
+      /*bottom: 5px;*/
       /*}*/
     }
     .resultBlock{
@@ -886,6 +999,58 @@
         z-index: 15;
         background: url("../../static/showSrc/return.png");
         background-size: cover;
+      }
+      .cover{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 16;
+        background: rgba(0,0,0,0.4);
+        .shareTips{
+          width: 200px;
+          height: 172.69px;
+          border-radius: 3px;
+          background: #666;
+          color: #fff;
+          padding: 1rem;
+          .text{
+            width: 100%;
+            height: 100%;
+            border: solid 1px #fff;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            text-align: center;
+          }
+        }
+      }
+    }
+    .musicCtrl {
+      position: fixed;
+      z-index: 20;
+      right: 10px;
+      top: 10px;
+      width: 32px;
+      height: 32px;
+      .music {
+        width: 32px;
+        height: 32px;
+        background: url("http://newmedia.yokelly.com.cn/src/nomusic.png");
+        background-size: 100% 100%;
+      }
+    }
+    .trans {
+      animation: 3s rotate infinite linear; //linear 匀速运动
+      .music {
+        width: 32px;
+        height: 32px;
+        background: url("http://newmedia.yokelly.com.cn/src/music.png");
+        background-size: 100% 100%;
       }
     }
   }

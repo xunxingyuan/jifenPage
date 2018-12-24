@@ -11,6 +11,7 @@ import { Pagination, Select,Table,Input,Alert,Option,Button,TableColumn,MessageB
 import 'element-ui/lib/theme-chalk/index.css';
 import VueTouch from 'vue-touch'
 
+
 Vue.use(VueTouch, {name: 'v-touch'})
 Vue.use(require('vue-wechat-title'))
 Vue.use(WechatPlugin)
