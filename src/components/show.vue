@@ -40,13 +40,13 @@
 
       <div class="inputBox" v-if="showInput">
         <div class="inputItem title" v-if="editStep=== 2">
-          <p>请输入你的封面标题</p>
+          <p class="introTitle">请输入你的封面标题</p>
           <input v-model="userTitle" placeholder="输入可以为空" />
           <p class="tips">手指缩放可以调整大小，底部可以替换文本颜色哦</p>
           <button @click="confirmInput">确认</button>
         </div>
         <div class="inputItem name" v-if="editStep===3">
-          <p>请输入你的姓名</p>
+          <p class="introTitle">请输入你的姓名</p>
           <input v-model="userName" placeholder="输入可以为空"  />
           <p class="tips">手指缩放可以调整大小，底部可以替换文本颜色哦</p>
           <button @click="confirmName">确认</button>
@@ -766,6 +766,9 @@
           this.part = 2
         }else{
           this.editStep -= 1
+          if(this.editStep!==1){
+            this.showInput = true
+          }
         }
       },
       backMake: function () {
@@ -1019,7 +1022,10 @@
           p{
             width: 100%;
             margin-bottom: 1rem;
-            font-size: 18px;
+            font-size: 20px;
+          }
+          .introTitle{
+            font-weight: 600;
           }
           input{
             width: 100%;
@@ -1031,6 +1037,7 @@
             color: #c3ad71;
             padding: 0 10px;
             border-radius: 0;
+            font-size: 18px;
           }
           .tips{
             color: #999;
@@ -1045,6 +1052,7 @@
             color: #fff;
             border-radius: 3px;
             outline: none;
+            font-size: 16px;
           }
         }
       }
