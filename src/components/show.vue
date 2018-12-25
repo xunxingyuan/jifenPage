@@ -79,7 +79,7 @@
     <audio
       id="audio2"
       style="display: none;"
-      src="http://newmedia.yokelly.com.cn/src/music.mp3"
+      src="http://newmedia.yokelly.com.cn/src/show/showMusic.mp3"
       preload="auto"
       loop="loop"
     ></audio>
@@ -295,7 +295,7 @@
                 _self.$wechat.onMenuShareTimeline({
                   title: "我要上封面", // 分享标题
                   link: "http://newmedia.yokelly.com.cn/show", // 分享链接,该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                  // imgUrl: "http://newmedia.yokelly.com.cn/src/catIcon.jpg", // 分享图标
+                  imgUrl: "http://newmedia.yokelly.com.cn/src/show/share.jpg", // 分享图标
                   success: function() {
                     // 用户点击了分享后执行的回调函数
                     _self.countShare();
@@ -305,7 +305,7 @@
                   title: "我要上封面", // 分享标题
                   desc: "制作你的专属时尚封面！", // 分享描述
                   link: "http://newmedia.yokelly.com.cn/show", // 分享链接,该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                  imgUrl: "", // 分享图标
+                  imgUrl: "http://newmedia.yokelly.com.cn/src/show/share.jpg", // 分享图标
                   type: "", // 分享类型,music.video或link,不填默认为link
                   dataUrl: "", // 如果type是music或video,则要提供数据链接,默认为空
                   success: function() {
@@ -331,9 +331,9 @@
                 this.userNameSave = res.data.data.nickname
                 this.countEnter(id);
                 this.jsShareInit();
-                this.audioAutoPlay("audio2");
                 this.checkImg(this.imgList).then(() => {
                   this.part = 2
+                  this.audioAutoPlay("audio2");
                 });
               } else {
                 window.localStorage.removeItem("userIdShow");
@@ -866,10 +866,12 @@
       }
       .btn{
         position: absolute;
-        right: 0;
-        bottom: 5%;
-        width: 50%;
-        height: 150px;
+        left: 5%;
+        bottom: 15%;
+        width: 132.3px;
+        height: 30px;
+        background: url("../../static/showSrc/button.png");
+        background-size: 100% 100%;
         .upload{
           position: absolute;
           left: 0;
@@ -1047,6 +1049,7 @@
           button{
             width: 100px;
             height: 32px;
+            line-height: 32px;
             border: 2px solid #c3ad71;
             background: transparent;
             color: #fff;
