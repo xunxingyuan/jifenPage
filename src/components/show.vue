@@ -404,23 +404,23 @@
         let imgWidth = _self.imgStyle.width
         let imgHeight = _self.imgStyle.height
 
-        if (navigator.userAgent.match(/iphone/i)){
-          if(_self.Orientation != "" && _self.Orientation != 1){
-            switch(_self.Orientation){
-              case 6://需要顺时针（向左）90度旋转
-                _self.imgStyle.rotate += 90
-                break;
-              case 8://需要逆时针（向右）90度旋转
-                _self.imgStyle.rotate -= 90
-                break;
-              case 3://需要180度旋转
-                _self.imgStyle.rotate += 180
-                break;
-              default:
-                break;
-            }
-          }
-        }
+//        if (navigator.userAgent.match(/iphone/i)){
+//          if(_self.Orientation != "" && _self.Orientation != 1){
+//            switch(_self.Orientation){
+//              case 6://需要顺时针（向左）90度旋转
+//                _self.imgStyle.rotate += 90
+//                break;
+//              case 8://需要逆时针（向右）90度旋转
+//                _self.imgStyle.rotate -= 90
+//                break;
+//              case 3://需要180度旋转
+//                _self.imgStyle.rotate += 180
+//                break;
+//              default:
+//                break;
+//            }
+//          }
+//        }
         let picDom = document.querySelector(".imgBox");
         let width = picDom.offsetWidth;
         let height = picDom.offsetHeight;
@@ -598,8 +598,8 @@
         if(window.FileReader) {
           let fr = new FileReader();
           fr.readAsDataURL(_self.$refs.uploadImgData.files[0]);
-          fr.onloadend = function() {
-            _self.userUpload = this.result
+          fr.onload  = function(e) {
+            _self.userUpload = e.target.result
             _self.part = 3
             _self.tipShow = true
             setTimeout(()=>{
