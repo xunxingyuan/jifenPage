@@ -599,12 +599,54 @@
           let fr = new FileReader();
           fr.readAsDataURL(_self.$refs.uploadImgData.files[0]);
           fr.onload  = function(e) {
-            _self.userUpload = e.target.result
-            _self.part = 3
-            _self.tipShow = true
-            setTimeout(()=>{
-              _self.tipShow = false
-            },1500)
+//            _self.userUpload = e.target.result
+//            _self.part = 3
+//            _self.tipShow = true
+//            setTimeout(()=>{
+//              _self.tipShow = false
+//            },1500)
+
+
+            let image = new Image();
+            image.src = e.target.result;
+            image.onload = function () {
+              let canvas = document.createElement("canvas");
+              canvas.width = this.naturalWidth;
+              canvas.height = this.naturalHeight;
+              let ctx = canvas.getContext("2d");
+              ctx.drawImage(this, 0, 0, this.naturalWidth, this.naturalHeight);
+              let base64 = null;
+              if (_self.Orientation != "" && _self.Orientation != 1 && _self.Orientation != undefined) {
+                let width = this.naturalWidth;
+                let height = this.naturalHeight;
+                switch (_self.Orientation) {
+                  case 6://需要顺时针90度旋转
+                    canvas.width = height;
+                    canvas.height = width;
+                    ctx.rotate(90 * Math.PI / 180);
+                    ctx.drawImage(this, 0, -height);
+                    break;
+                  case 8://需要逆时针90度旋转
+                    canvas.width = height;
+                    canvas.height = width;
+                    ctx.rotate(-90 * Math.PI / 180);
+                    ctx.drawImage(this, -width, 0);
+                    break;
+                  case 3://需要180度旋转
+                    ctx.rotate(180 * Math.PI / 180);
+                    ctx.drawImage(this, -width, -height);
+                    break;
+                }
+              }
+              base64 = canvas.toDataURL("image/jpeg");
+
+              _self.userUpload = base64
+              _self.part = 3
+              _self.tipShow = true
+              setTimeout(() => {
+                _self.tipShow = false
+              }, 1500)
+            }
           }
         }
 
