@@ -5,10 +5,14 @@
       <!--<p>Loading....</p>-->
     </section>
     <section class="choseImg flexCenter" v-if="part === 2">
-      <img src="http://newmedia.yokelly.com.cn/src/show/home.jpg" class="home" />
-      <div class="btn">
-        <input class="upload" type="file" @change="getUploadImg()" accept="image/*" ref="uploadImgData" />
+      <div class="imgContain">
+        <img src="http://newmedia.yokelly.com.cn/src/show/home.jpg" class="home" />
+        <div class="btn">
+          <input class="upload" type="file" @change="getUploadImg()" accept="image/*" ref="uploadImgData" />
+        </div>
       </div>
+
+
     </section>
     <section class="editImg" v-if="part === 3">
       <v-touch class="touchBox" :style="{height: countHeight + 'px'}" @panstart="update" @panend="update"  @panmove="move" @pinchmove="pinch" @pinchstart="update" @pinchend="update"></v-touch>
@@ -860,28 +864,34 @@
       flex-flow: column;
       align-items: center;
       justify-content: center;
-      .home{
+      .imgContain{
+        position: relative;
         width: 100%;
         height: auto;
-      }
-      .btn{
-        position: absolute;
-        left: 5%;
-        bottom: 15%;
-        width: 132.3px;
-        height: 30px;
-        background: url("../../static/showSrc/button.png");
-        background-size: 100% 100%;
-        .upload{
-          position: absolute;
-          left: 0;
-          top: 0;
+        .home{
           width: 100%;
-          height: 100%;
-          opacity: 0;
-          z-index: 5;
+          height: auto;
+        }
+        .btn{
+          position: absolute;
+          left: 13%;
+          bottom: 15%;
+          width: 30vw;
+          height: 7vw;
+          background: url("../../static/showSrc/button.png");
+          background-size: 100% 100%;
+          .upload{
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            z-index: 5;
+          }
         }
       }
+
 
     }
     .editImg{
